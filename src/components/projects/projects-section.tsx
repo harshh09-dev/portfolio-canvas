@@ -119,24 +119,27 @@ export function ProjectsSection() {
         }}
       >
         {/* Heading */}
-        <div className="w-full text-center mb-6 sm:mb-8 md:mb-12 relative pt-8 sm:pt-16 md:pt-28 pb-10 sm:pb-16 md:pb-20">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 h-60 sm:w-75 sm:h-75 md:w-100 md:h-100 opacity-20 pointer-events-none">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/30 to-blue-500/30 blur-[60px] animate-pulse" />
+        <div className="w-full text-center mb-10 md:mb-16 relative pt-4 pb-6 md:pb-10">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 md:w-[28rem] md:h-[28rem] opacity-[0.18] pointer-events-none">
+            <div
+              className="absolute inset-0 rounded-full blur-[80px]"
+              style={{
+                background:
+                  "radial-gradient(closest-side, color-mix(in oklch, var(--accent-signature) 55%, transparent), transparent 70%)",
+              }}
+            />
           </div>
-          <div className="relative flex flex-col items-center px-4">
-            <p className="text-xs sm:text-sm uppercase tracking-wider text-neutral-500 dark:text-gray-300 mb-1 sm:mb-2 font-outfit">
-              Crafting modern experiences
+          <div className="relative flex flex-col items-center px-4 gap-3">
+            <p className="text-eyebrow">Crafting modern experiences</p>
+            <h2 className="section-heading">
+              Venture <span className="work-text">Showcase</span>
+            </h2>
+            <p className="text-lead max-w-xl mt-2">
+              Selected work — products I&apos;ve designed, built, and shipped.
             </p>
-            <div className="flex items-center">
-              <h2 className="font-outfit font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-foreground">
-                VENTURE
-              </h2>
-              <h2 className="work-text ml-1.5 sm:ml-2 md:ml-3 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
-                SHOWCASE
-              </h2>
-            </div>
           </div>
         </div>
+
 
         {/* Content */}
         <div
