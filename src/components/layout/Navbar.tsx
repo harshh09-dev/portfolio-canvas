@@ -2,25 +2,11 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "@tanstack/react-router";
 import { ChevronDown, Moon, Sun, Command } from "lucide-react";
-
-const navItems = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Projects", href: "/projects" },
-  { name: "Creative", href: "/creative" },
-  { name: "Blogs", href: "/blog" },
-];
-
-const moreItems = [
-  { name: "Links", desc: "Socials & Profiles", href: "/links" },
-  { name: "Uses", desc: "My gear & software", href: "/uses" },
-  { name: "Guestbook", desc: "Sign my wall", href: "/guestbook" },
-];
+import { nav, site } from "@/data/site";
 
 /**
  * Sticky editorial navbar. Theme toggle correctly flips BOTH `.dark` and
- * `.light` classes on <html> — necessary because our token system defines
- * a separate `.light` class rather than defaulting :root to light.
+ * `.light` classes on <html>.
  */
 export default function Navbar() {
   const location = useLocation();
@@ -31,7 +17,7 @@ export default function Navbar() {
 
   useEffect(() => {
     setMounted(true);
-    const stored = localStorage.getItem("theme");
+    const stored = typeof localStorage !== "undefined" ? localStorage.getItem("theme") : null;
     const dark = stored ? stored === "dark" : true;
     applyTheme(dark);
     setIsDark(dark);
@@ -54,7 +40,9 @@ export default function Navbar() {
     const next = !isDark;
     setIsDark(next);
     applyTheme(next);
-    try { localStorage.setItem("theme", next ? "dark" : "light"); } catch {}
+    try {
+      localStorage.setItem("theme", next ? "dark" : "light");
+    } catch {}
   };
 
   return (
@@ -64,9 +52,9 @@ export default function Navbar() {
         <div className="mx-auto flex max-w-sm items-center justify-between rounded-full border border-border bg-background/70 px-4 py-2 backdrop-blur-xl">
           <a href="/" className="flex items-center gap-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card">
-              <span className="font-serif italic text-sm text-fg leading-none">Ak</span>
+              <span className="font-serif italic text-sm text-fg leading-none">{site.initials}</span>
             </div>
-            <span className="text-sm font-medium">Anjali Kamal</span>
+            <span className="text-sm font-medium">{site.name}</span>
           </a>
           <button
             onClick={toggleTheme}
@@ -109,13 +97,13 @@ export default function Navbar() {
           >
             <a href="/" className="flex items-center gap-3 rounded-full px-3 py-2">
               <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card/80 backdrop-blur-xl shadow-sm overflow-hidden">
-                <span className="font-serif italic text-base text-fg leading-none">Ak</span>
+                <span className="font-serif italic text-base text-fg leading-none">{site.initials}</span>
               </div>
             </a>
           </motion.div>
 
           <nav className="flex items-center gap-1">
-            {navItems.map((item) => (
+            {nav.primary.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
@@ -147,7 +135,7 @@ export default function Navbar() {
                     exit={{ opacity: 0, y: 8 }}
                     className="absolute right-0 mt-2 w-60 rounded-2xl border border-border bg-background p-2 shadow-xl"
                   >
-                    {moreItems.map((item) => (
+                    {nav.more.map((item) => (
                       <a
                         key={item.name}
                         href={item.href}
@@ -197,7 +185,7 @@ export default function Navbar() {
                 <Command size={16} />
               </button>
               <a
-                href="mailto:anjalikamal3105@gmail.com"
+                href={`mailto:${site.email}`}
                 className="whitespace-nowrap rounded-full bg-foreground px-5 py-2 text-sm text-background transition-transform hover:scale-[1.03]"
               >
                 Book a Call

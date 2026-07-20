@@ -5,48 +5,67 @@
 @custom-variant dark (&:is(.dark, .dark *));
 
 /* ============================================================
-   DESIGN TOKENS — Anjali Kamal portfolio (dark-first, editorial)
-   Single source of truth. Every section pulls from here.
+   DESIGN TOKENS — Anjali Kamal portfolio
+   Deep matte black. Editorial. Cinematic.
+   Accent gradient: soft pink → warm yellow → soft blue.
    ============================================================ */
 
 :root, .dark {
-  /* Color */
-  --bg: oklch(0.14 0 0);
-  --bg-elevated: oklch(0.18 0 0);
-  --bg-inset: oklch(0.10 0 0);
-  --surface: oklch(0.16 0 0);
-  --surface-2: oklch(0.20 0 0);
-  --fg: oklch(0.97 0 0);
-  --fg-muted: oklch(0.70 0 0);
+  /* Matte black surface stack */
+  --bg: oklch(0.11 0 0);
+  --bg-elevated: oklch(0.145 0 0);
+  --bg-inset: oklch(0.085 0 0);
+  --surface: oklch(0.155 0 0);
+  --surface-2: oklch(0.19 0 0);
+  --fg: oklch(0.98 0 0);
+  --fg-muted: oklch(0.72 0 0);
   --fg-subtle: oklch(0.52 0 0);
-  --border: oklch(0.26 0 0);
+  --border: oklch(0.24 0 0);
   --border-strong: oklch(0.36 0 0);
   --ring: oklch(0.85 0 0);
 
-  --accent-warm: oklch(0.78 0.14 60);
-  --accent-cool: oklch(0.72 0.13 210);
-  --accent-signature: oklch(0.72 0.20 25);  /* ember */
-  --accent-mint: oklch(0.78 0.16 160);
-  --accent-pink: oklch(0.78 0.14 350);
+  /* Accent trio — luxurious, not vibrant */
+  --accent-pink: oklch(0.88 0.06 12);      /* soft pink */
+  --accent-yellow: oklch(0.90 0.08 90);    /* warm yellow */
+  --accent-blue: oklch(0.82 0.06 230);     /* soft blue */
+  --accent-signature: var(--accent-pink);  /* alias */
+  --accent-red: oklch(0.62 0.20 25);       /* skills marquee */
+  --accent-warm: var(--accent-yellow);
+  --accent-cool: var(--accent-blue);
+  --accent-mint: var(--accent-blue);
   --destructive: oklch(0.60 0.22 25);
 
+  /* Signature gradient — soft pink → warm yellow → soft blue */
+  --gradient-signature: linear-gradient(
+    120deg,
+    oklch(0.88 0.06 12) 0%,
+    oklch(0.90 0.08 90) 48%,
+    oklch(0.82 0.06 230) 100%
+  );
+  --gradient-signature-soft: linear-gradient(
+    120deg,
+    color-mix(in oklch, oklch(0.88 0.06 12) 60%, transparent) 0%,
+    color-mix(in oklch, oklch(0.90 0.08 90) 60%, transparent) 48%,
+    color-mix(in oklch, oklch(0.82 0.06 230) 60%, transparent) 100%
+  );
+
   /* Shadcn HSL bridge */
-  --background: 0 0% 8%;
-  --foreground: 0 0% 97%;
-  --card: 0 0% 11%;
-  --card-foreground: 0 0% 97%;
-  --popover: 0 0% 11%;
-  --popover-foreground: 0 0% 97%;
-  --primary: 0 0% 97%;
-  --primary-foreground: 0 0% 8%;
-  --secondary: 0 0% 15%;
-  --secondary-foreground: 0 0% 97%;
-  --muted: 0 0% 15%;
-  --muted-foreground: 0 0% 68%;
-  --accent: 25 90% 62%;
+  --background: 0 0% 6.5%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 9.5%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 9.5%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 6.5%;
+  --secondary: 0 0% 14%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 14%;
+  --muted-foreground: 0 0% 70%;
+  --accent: 40 60% 82%;
   --accent-foreground: 0 0% 8%;
   --destructive-foreground: 0 0% 100%;
-  --input: 0 0% 20%;
+  --input: 0 0% 18%;
 }
 
 .light {
@@ -74,12 +93,12 @@
   --secondary-foreground: 0 0% 12%;
   --muted: 0 0% 95%;
   --muted-foreground: 0 0% 40%;
-  --accent: 25 90% 55%;
+  --accent: 40 60% 55%;
   --accent-foreground: 0 0% 99%;
   --input: 0 0% 90%;
 }
 
-/* Radius / shadows / motion — shared */
+/* Radius / shadows / motion / rhythm */
 :root {
   --radius-xs: 4px;
   --radius-sm: 8px;
@@ -93,7 +112,7 @@
   --shadow-sm: 0 4px 12px -6px oklch(0 0 0 / 0.45);
   --shadow-md: 0 12px 32px -14px oklch(0 0 0 / 0.55), 0 2px 6px oklch(0 0 0 / 0.25);
   --shadow-lg: 0 30px 80px -24px oklch(0 0 0 / 0.65), 0 6px 18px oklch(0 0 0 / 0.35);
-  --shadow-glow: 0 0 60px -12px color-mix(in oklch, var(--accent-signature) 45%, transparent);
+  --shadow-glow: 0 0 90px -20px color-mix(in oklch, var(--accent-pink) 55%, transparent);
   --shadow-elegant: 0 24px 60px -30px oklch(0 0 0 / 0.55), 0 0 0 1px color-mix(in oklch, var(--border) 60%, transparent);
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -103,17 +122,17 @@
   --dur-base: 320ms;
   --dur-slow: 620ms;
 
-  /* Editorial rhythm */
-  --section-y: clamp(5rem, 10vw, 10rem);
-  --section-y-tight: clamp(3rem, 6vw, 6rem);
+  /* Editorial rhythm — standardized */
+  --section-y: clamp(5rem, 9vw, 9rem);
+  --section-y-tight: clamp(3rem, 5vw, 5rem);
   --container-max: 1280px;
   --container-max-wide: 1440px;
   --container-pad: clamp(1.25rem, 3vw, 3rem);
 
-  /* Fonts (loaded via <link> in __root.tsx) */
-  --font-sans: "Outfit", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
-  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  /* Fonts — Fraunces (display serif) + Manrope (body) + JetBrains Mono */
+  --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: "Fraunces", ui-serif, Georgia, serif;
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
 
   --z-nav: 50;
@@ -121,10 +140,6 @@
   --z-toast: 70;
   --z-loader: 100;
 }
-
-/* ============================================================
-   THEME MAP
-   ============================================================ */
 
 @theme inline {
   --color-bg: var(--bg);
@@ -138,11 +153,14 @@
   --color-border-token: var(--border);
   --color-border-strong: var(--border-strong);
   --color-ring-token: var(--ring);
+  --color-accent-pink: var(--accent-pink);
+  --color-accent-yellow: var(--accent-yellow);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-signature: var(--accent-signature);
+  --color-accent-red: var(--accent-red);
   --color-accent-warm: var(--accent-warm);
   --color-accent-cool: var(--accent-cool);
-  --color-accent-signature: var(--accent-signature);
   --color-accent-mint: var(--accent-mint);
-  --color-accent-pink: var(--accent-pink);
 
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -213,7 +231,7 @@
   }
 
   ::selection {
-    background: color-mix(in oklch, var(--accent-signature) 40%, transparent);
+    background: color-mix(in oklch, var(--accent-pink) 40%, transparent);
     color: var(--fg);
   }
 
@@ -237,13 +255,13 @@
 }
 
 /* ============================================================
-   TYPOGRAPHY — one system, everywhere
+   TYPOGRAPHY — one editorial system
    ============================================================ */
 
 @utility text-eyebrow {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--fg-muted);
   font-weight: 500;
@@ -251,10 +269,12 @@
 
 @utility text-display {
   font-family: var(--font-serif);
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  line-height: 0.88;
-  font-size: clamp(4.5rem, 14vw, 13rem);
+  font-weight: 300;
+  letter-spacing: -0.035em;
+  line-height: 0.86;
+  font-size: clamp(4.5rem, 14vw, 12rem);
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 100, "opsz" 144;
 }
 
 @utility text-h1 {
@@ -292,20 +312,26 @@
 @utility text-serif-italic {
   font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: -0.01em;
   line-height: 1;
+  font-variation-settings: "SOFT" 100;
 }
 
 @utility gradient-text {
-  background: linear-gradient(120deg, var(--fg), color-mix(in oklch, var(--accent-signature) 70%, var(--fg)));
+  background: var(--gradient-signature);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+@utility gradient-bg {
+  background: var(--gradient-signature);
 }
 
 /* ============================================================
-   PRIMITIVES — layout rhythm
+   PRIMITIVES
    ============================================================ */
 
 @utility container-editorial {
@@ -334,8 +360,8 @@
 
 @utility section-label {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--fg-muted);
   font-weight: 500;
@@ -352,14 +378,25 @@
   }
 }
 
-
+/* Section headings — centered by default across the whole site */
 @utility section-heading {
-  font-family: var(--font-sans);
-  font-weight: 500;
+  font-family: var(--font-serif);
+  font-weight: 300;
   letter-spacing: -0.03em;
   line-height: 1;
-  font-size: clamp(2.25rem, 5vw, 4rem);
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
   color: var(--fg);
+  text-align: center;
+  font-variation-settings: "SOFT" 100, "opsz" 144;
+}
+
+@utility section-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
 }
 
 @utility divider-line {
@@ -368,7 +405,7 @@
   background: linear-gradient(
     to right,
     transparent,
-    color-mix(in oklch, var(--fg) 14%, transparent),
+    color-mix(in oklch, var(--fg) 12%, transparent),
     transparent
   );
 }
@@ -396,6 +433,23 @@
   }
 }
 
+@utility btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  background: var(--fg);
+  color: var(--bg);
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: transform var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 30px -10px color-mix(in oklch, var(--accent-pink) 40%, transparent);
+  }
+}
 
 @utility glass-card {
   background: color-mix(in oklch, var(--surface) 70%, transparent);
@@ -412,13 +466,12 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.03;
+    opacity: 0.04;
     z-index: 0;
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }
-
 
 @utility grain {
   position: absolute;
@@ -433,18 +486,18 @@
   padding-inline: var(--container-pad);
 }
 
-/* text gradient legacy alias */
 @utility text-gradient {
-  background: linear-gradient(120deg, var(--fg), color-mix(in oklch, var(--accent-signature) 70%, var(--fg)));
+  background: var(--gradient-signature);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
 @utility eyebrow {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--fg-muted);
   font-weight: 500;
@@ -455,12 +508,8 @@
 }
 
 @utility text-brand-2 {
-  color: var(--accent-signature);
+  color: var(--accent-pink);
 }
-
-/* ============================================================
-   REVEAL / MOTION helpers
-   ============================================================ */
 
 @utility reveal-hidden {
   opacity: 0;
@@ -476,7 +525,6 @@
   transform: translateY(105%);
 }
 
-/* Project card frame styling — used by projects-section */
 .project-frame {
   border-radius: var(--radius-xl);
   overflow: hidden;
@@ -493,16 +541,12 @@
 .work-text {
   font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: -0.02em;
-  color: var(--accent-signature);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
+  background: var(--gradient-signature);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-variation-settings: "SOFT" 100;
 }
