@@ -1,10 +1,10 @@
-import { useEffect, useRef, type ElementType } from "react";
+import { useEffect, useRef, type ElementType, type ReactNode } from "react";
 import SplitType from "split-type";
 import { ensureGsap, prefersReducedMotion } from "@/lib/motion";
 
 type Props = {
   as?: ElementType;
-  children: string;
+  children: ReactNode;
   className?: string;
   delay?: number;
   duration?: number;
