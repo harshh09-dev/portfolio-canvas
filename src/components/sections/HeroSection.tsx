@@ -1,13 +1,14 @@
 import { useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { MapPin, Layers, ArrowUpRight, ChevronDown } from "lucide-react";
+import { MapPin, Layers, ArrowUpRight } from "lucide-react";
 import { ensureGsap, prefersReducedMotion } from "@/lib/motion";
 import Magnetic from "@/components/motion/Magnetic";
 import SplitReveal from "@/components/motion/SplitReveal";
+import { site } from "@/data/site";
 
 /**
- * Hero — refined for laptop viewports (1280×720+). Vertically centered,
- * editorial rhythm, magnetic CTAs, one type system, GSAP-driven reveal.
+ * Hero — refined for laptop viewports (1280×720 / 1366×768). Vertically
+ * centered, no filler line, wider usable content, editorial rhythm.
  */
 export default function HeroSection() {
   const reduce = useReducedMotion();
@@ -15,7 +16,6 @@ export default function HeroSection() {
   const glow = useRef<HTMLDivElement>(null);
   const displayRef = useRef<HTMLHeadingElement>(null);
 
-  // GSAP display headline reveal — replaces framer initial for perfect timing
   useEffect(() => {
     if (prefersReducedMotion()) return;
     const el = displayRef.current;
@@ -23,12 +23,11 @@ export default function HeroSection() {
     const { gsap } = ensureGsap();
     gsap.fromTo(
       el,
-      { yPercent: 40, opacity: 0, filter: "blur(14px)" },
+      { yPercent: 30, opacity: 0, filter: "blur(14px)" },
       { yPercent: 0, opacity: 1, filter: "blur(0)", duration: 1.4, ease: "expo.out", delay: 0.15 },
     );
   }, []);
 
-  // Cursor-following ember glow
   useEffect(() => {
     if (reduce) return;
     const el = root.current;
@@ -44,7 +43,7 @@ export default function HeroSection() {
     const tick = () => {
       cx += (tx - cx) * 0.08;
       cy += (ty - cy) * 0.08;
-      g.style.transform = `translate3d(${cx - 260}px, ${cy - 260}px, 0)`;
+      g.style.transform = `translate3d(${cx - 320}px, ${cy - 320}px, 0)`;
       raf = requestAnimationFrame(tick);
     };
     el.addEventListener("mousemove", onMove);
@@ -60,26 +59,27 @@ export default function HeroSection() {
       ref={root}
       className="relative w-full overflow-hidden bg-bg noise-overlay grid place-items-center"
       style={{
-        minHeight: "min(100svh, 820px)",
+        minHeight: "min(80svh, 720px)",
+        paddingTop: "max(6rem, 12vh)",
+        paddingBottom: "max(3rem, 6vh)",
       }}
     >
-      {/* Ambient layers */}
+      {/* Ambient soft-gradient wash */}
       <div
         aria-hidden
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none opacity-70"
         style={{
           background:
-            "radial-gradient(1000px 500px at 50% 105%, color-mix(in oklch, var(--accent-signature) 14%, transparent), transparent 60%), radial-gradient(700px 400px at 8% -10%, color-mix(in oklch, var(--accent-cool) 10%, transparent), transparent 60%)",
+            "radial-gradient(900px 500px at 20% 110%, color-mix(in oklch, var(--accent-pink) 12%, transparent), transparent 60%), radial-gradient(700px 500px at 90% -10%, color-mix(in oklch, var(--accent-blue) 10%, transparent), transparent 60%), radial-gradient(600px 400px at 50% 60%, color-mix(in oklch, var(--accent-yellow) 8%, transparent), transparent 65%)",
         }}
       />
       <div
         ref={glow}
         aria-hidden
-        className="absolute h-[520px] w-[520px] rounded-full pointer-events-none opacity-0 lg:opacity-60"
+        className="absolute h-[640px] w-[640px] rounded-full pointer-events-none opacity-0 lg:opacity-50"
         style={{
-          background:
-            "radial-gradient(closest-side, color-mix(in oklch, var(--accent-signature) 26%, transparent), transparent 70%)",
-          filter: "blur(90px)",
+          background: "var(--gradient-signature-soft)",
+          filter: "blur(120px)",
           willChange: "transform",
         }}
       />
@@ -88,45 +88,40 @@ export default function HeroSection() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle at 50% 55%, transparent 40%, var(--bg) 100%)",
+            "radial-gradient(circle at 50% 55%, transparent 35%, var(--bg) 100%)",
         }}
       />
 
-      {/* Content — grid center, top-padded for nav */}
-      <div className="relative z-10 container-editorial w-full pt-24 pb-12 md:pt-28 md:pb-16">
+      <div className="relative z-10 w-full container-wide">
         <div className="flex flex-col items-center text-center">
-          {/* Eyebrow */}
           <motion.p
             initial={reduce ? false : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.05 }}
             className="text-eyebrow mb-5 md:mb-6"
           >
-            I design and build scalable systems that
+            {site.eyebrow}
           </motion.p>
 
-          {/* Display name — GSAP animated */}
           <h1
             ref={displayRef}
             className="text-display text-fg select-none"
             style={{ willChange: "transform, opacity, filter" }}
           >
-            Anjali
+            {site.displayName}
           </h1>
 
-          {/* Serif tagline */}
           <SplitReveal
             as="p"
-            className="text-serif-italic text-fg mt-2 md:mt-4"
+            className="text-serif-italic gradient-text mt-1 md:mt-3"
             delay={0.5}
             duration={1}
             stagger={0.05}
             split="words"
           >
-            solve real-world problems.
+            {site.tagline}
           </SplitReveal>
 
-          {/* CTAs */}
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
@@ -135,7 +130,7 @@ export default function HeroSection() {
           >
             <Magnetic>
               <a
-                href="#projects"
+                href="/projects"
                 className="group relative inline-flex items-center justify-center gap-2 min-h-11 rounded-full bg-fg px-6 py-3 text-sm font-medium text-bg transition-transform duration-300 hover:scale-[1.03]"
               >
                 See selected work
@@ -147,7 +142,7 @@ export default function HeroSection() {
             </Magnetic>
             <Magnetic strength={0.2}>
               <a
-                href="mailto:anjalikamal3105@gmail.com"
+                href={`mailto:${site.email}`}
                 className="inline-flex items-center justify-center gap-2 min-h-11 rounded-full border border-border-strong px-6 py-3 text-sm font-medium text-fg transition-colors duration-300 hover:bg-surface"
               >
                 Let&apos;s connect
@@ -160,35 +155,21 @@ export default function HeroSection() {
             initial={reduce ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1 }}
-            className="mt-10 md:mt-14 grid grid-cols-2 md:grid-cols-3 items-center gap-6 md:gap-10 w-full max-w-2xl"
+            className="mt-10 md:mt-12 grid grid-cols-2 items-center gap-8 md:gap-16 w-full max-w-lg"
           >
             <div className="flex flex-col gap-1 text-left">
               <span className="inline-flex items-center gap-1.5 text-eyebrow">
-                <MapPin size={12} className="text-accent-mint" />
+                <MapPin size={12} style={{ color: "var(--accent-pink)" }} />
                 Based in
               </span>
-              <span className="text-sm md:text-base font-medium text-fg">Jaipur, India</span>
+              <span className="text-sm md:text-base font-medium text-fg">{site.location}</span>
             </div>
-
-            <div className="hidden md:flex flex-col items-center gap-2 text-eyebrow">
-              <span>Scroll</span>
-              <motion.span
-                animate={reduce ? undefined : { y: [0, 6, 0] }}
-                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-                className="text-fg-muted"
-              >
-                <ChevronDown size={16} />
-              </motion.span>
-            </div>
-
             <div className="flex flex-col gap-1 text-right">
               <span className="inline-flex items-center gap-1.5 justify-end text-eyebrow">
-                <Layers size={12} className="text-accent-pink" />
+                <Layers size={12} style={{ color: "var(--accent-blue)" }} />
                 Role
               </span>
-              <span className="text-sm md:text-base font-medium text-fg">
-                Full Stack Dev & AI Engineer
-              </span>
+              <span className="text-sm md:text-base font-medium text-fg">{site.role}</span>
             </div>
           </motion.div>
         </div>
