@@ -16,21 +16,21 @@ function Home() {
   return (
     <>
       <HeroSection />
-      <div className="divider-line" />
+      <div className="divider-hair container-editorial" />
       <WhatIDo />
-      <div className="divider-line" />
+      <div className="divider-hair container-editorial" />
       <AboutPreview />
-      <div className="divider-line" />
+      <div className="divider-hair container-editorial" />
       <div id="projects">
         <ProjectShowcase />
       </div>
-      <div className="divider-line" />
+      <div className="divider-hair container-editorial" />
       <SkillsSection />
-      <div className="divider-line" />
+      <div className="divider-hair container-editorial" />
       <CreativeSide />
-      <div className="divider-line" />
+      <div className="divider-hair container-editorial" />
       <LyricsAndLogic />
-      <div className="divider-line" />
+      <div className="divider-hair container-editorial" />
       <ContactCTA />
     </>
   );

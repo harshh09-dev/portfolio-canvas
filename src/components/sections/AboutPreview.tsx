@@ -1,164 +1,177 @@
-const __PLACEHOLDER = "data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 800 1000%27><defs><linearGradient id=%27g%27 x1=%270%27 y1=%270%27 x2=%271%27 y2=%271%27><stop offset=%270%27 stop-color=%27%23262626%27/><stop offset=%271%27 stop-color=%27%23111%27/></linearGradient></defs><rect width=%27800%27 height=%271000%27 fill=%27url(%23g)%27/></svg>";
-const img1 = __PLACEHOLDER;
-const img2 = __PLACEHOLDER;
-const img3 = __PLACEHOLDER;
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-
-import ScrollReveal from "../ScrollReveal";
 import { FaGithub, FaLinkedin, FaInstagram, FaXTwitter } from "react-icons/fa6";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
-const images = [img1, img2, img3];
+import Reveal from "@/components/motion/Reveal";
+import SplitReveal from "@/components/motion/SplitReveal";
+import { stats, socials } from "@/data/site";
 
-const stats = [
-  { value: "10+", label: "Projects Delivered" },
-  { value: "4+", label: "Professional Roles" },
-  { value: "2+", label: "Years of Experience" },
+const cards = [
+  "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=900&q=80",
+  "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=900&q=80",
+  "https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?w=900&q=80",
+  "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=900&q=80",
+  "https://images.unsplash.com/photo-1483058712412-4245e9b90334?w=900&q=80",
 ];
+
+const socialIcons: Record<string, React.ComponentType<{ size?: number }>> = {
+  GitHub: FaGithub,
+  LinkedIn: FaLinkedin,
+  Instagram: FaInstagram,
+  X: FaXTwitter,
+};
 
 export default function AboutPreview() {
   return (
-    <section className="section-padding">
-      <div className="mx-auto max-w-7xl">
-        <div className="grid items-center gap-16 md:grid-cols-2">
-          {/* Left */}
-          <ScrollReveal>
-            <p className="section-label">A LITTLE ABOUT ME</p>
+    <section className="section relative overflow-hidden">
+      <div className="container-editorial">
+        <div className="section-header">
+          <Reveal>
+            <p className="text-eyebrow">A little about me</p>
+          </Reveal>
+          <SplitReveal as="h2" className="section-heading" split="words">
+            Turning imagination into{" "}
+            <span className="work-text">interaction.</span>
+          </SplitReveal>
+        </div>
 
-            <h2 className="section-heading mb-8">
-              Turning imagination into{" "}
-              <span className="gradient-text font-serif italic">
-                interaction
-              </span>
-            </h2>
-
-            <p className="mb-6 text-sm leading-relaxed text-secondary-foreground">
-              I'm Anjali Kamal — a B.Tech student at IIIT Jabalpur, full-stack
-              developer, and creative thinker who believes technology should
-              feel human. I build systems that are scalable, reliable, and
-              beautiful.
+        <div className="grid items-center gap-14 lg:gap-20 lg:grid-cols-2">
+          {/* Left — copy */}
+          <Reveal>
+            <p className="text-lead mb-6">
+              I&apos;m Anjali Kamal — a B.Tech student at IIIT Jabalpur, full-stack
+              developer, and creative thinker who believes technology should feel
+              human. I build systems that are scalable, reliable, and beautiful.
             </p>
-
-            <p className="mb-8 text-sm leading-relaxed text-secondary-foreground">
+            <p className="text-lead mb-8">
               From embedded IoT systems to modern web platforms, my work bridges
-              engineering precision with design sensibility. Currently exploring
-              AI, data science, and the art of visual storytelling.
+              engineering precision with design sensibility.
             </p>
 
-            {/* Social Icons */}
+            {/* Pull quote */}
+            <blockquote
+              className="mb-10 border-l pl-6 py-1"
+              style={{ borderColor: "color-mix(in oklch, var(--accent-pink) 60%, transparent)" }}
+            >
+              <p
+                className="text-fg"
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontStyle: "italic",
+                  fontWeight: 300,
+                  fontSize: "clamp(1.25rem, 2vw, 1.75rem)",
+                  lineHeight: 1.3,
+                  fontVariationSettings: '"SOFT" 100',
+                }}
+              >
+                &ldquo;Technology should feel handcrafted, not manufactured.&rdquo;
+              </p>
+            </blockquote>
+
             <div className="mb-8 flex items-center gap-3">
-              <a
-                href="https://github.com/A-verse"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                className="glass-card rounded-full p-3 transition-all duration-300 hover:scale-110 hover:text-primary"
-              >
-                <FaGithub size={16} />
-              </a>
-
-              <a
-                href="https://www.linkedin.com/in/anjalikamal-ak3105/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="glass-card rounded-full p-3 transition-all duration-300 hover:scale-110 hover:text-primary"
-              >
-                <FaLinkedin size={16} />
-              </a>
-
-              <a
-                href="https://instagram.com/anjalikamal3105"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="glass-card rounded-full p-3 transition-all duration-300 hover:scale-110 hover:text-primary"
-              >
-                <FaInstagram size={16} />
-              </a>
-
-              <a
-                href="https://twitter.com/A-verse"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="X"
-                className="glass-card rounded-full p-3 transition-all duration-300 hover:scale-110 hover:text-primary"
-              >
-                <FaXTwitter size={16} />
-              </a>
+              {socials.map((s) => {
+                const Icon = socialIcons[s.name] || FaGithub;
+                return (
+                  <a
+                    key={s.name}
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.name}
+                    className="glass-card rounded-full p-3 transition-transform duration-300 hover:scale-110 hover:text-fg"
+                  >
+                    <Icon size={16} />
+                  </a>
+                );
+              })}
             </div>
 
-            <a href="/about" className="btn-outline text-xs">
-              More about me <ArrowRight size={12} />
+            <a
+              href="/about"
+              className="inline-flex items-center gap-2 rounded-full border border-border-strong px-5 py-2.5 text-sm font-medium text-fg transition-colors hover:bg-surface"
+            >
+              More about me <ArrowRight size={14} />
             </a>
-          </ScrollReveal>
+          </Reveal>
 
-          {/* Right */}
-          <ScrollReveal delay={0.2}>
+          {/* Right — carousel + stats */}
+          <Reveal delay={0.15}>
             <motion.div
-              initial={{ opacity: 0, x: 40 }}
+              initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             >
-              <Swiper
-                effect="coverflow"
-                centeredSlides
-                slidesPerView={3}
-                loop
-                speed={1200}
-                grabCursor
-                autoplay={{
-                  delay: 2500,
-                  disableOnInteraction: false,
-                }}
-                coverflowEffect={{
-                  rotate: 0,
-                  stretch: 0,
-                  depth: 220,
-                  modifier: 2,
-                  scale: 0.9,
-                  slideShadows: false,
-                }}
-                modules={[EffectCoverflow, Autoplay]}
-                className="w-full max-w-xl"
-              >
-                {images.map((image, i) => (
-                  <SwiperSlide
-                    key={i}
-                    className="!w-[280px] overflow-hidden rounded-3xl glass-card shadow-2xl"
-                  >
-                    <img
-                      src={image}
-                      alt=""
-                      className="h-[450px] w-full object-cover"
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+              <div className="relative">
+                <div
+                  aria-hidden
+                  className="absolute -inset-6 blur-3xl opacity-40 pointer-events-none"
+                  style={{ background: "var(--gradient-signature-soft)" }}
+                />
+                <Swiper
+                  effect="coverflow"
+                  centeredSlides
+                  slidesPerView={"auto"}
+                  loop
+                  speed={1400}
+                  grabCursor
+                  autoplay={{ delay: 2800, disableOnInteraction: false }}
+                  coverflowEffect={{
+                    rotate: 0,
+                    stretch: 0,
+                    depth: 260,
+                    modifier: 2,
+                    scale: 0.88,
+                    slideShadows: false,
+                  }}
+                  modules={[EffectCoverflow, Autoplay]}
+                  className="w-full relative"
+                >
+                  {cards.map((src, i) => (
+                    <SwiperSlide
+                      key={i}
+                      className="!w-[260px] overflow-hidden rounded-3xl border border-border bg-surface"
+                    >
+                      <img
+                        src={src}
+                        alt=""
+                        loading="lazy"
+                        className="h-[420px] w-full object-cover"
+                      />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
 
-              {/* Stats */}
-              <div className="mt-8 grid grid-cols-3 gap-4">
+              <div className="mt-10 grid grid-cols-3 gap-4">
                 {stats.map((stat) => (
                   <div
                     key={stat.label}
                     className="glass-card rounded-2xl p-5 text-center"
                   >
-                    <h3 className="gradient-text text-2xl font-bold">
+                    <h3
+                      className="gradient-text"
+                      style={{
+                        fontFamily: "var(--font-serif)",
+                        fontSize: "1.75rem",
+                        fontWeight: 400,
+                        letterSpacing: "-0.02em",
+                        fontVariationSettings: '"SOFT" 100',
+                      }}
+                    >
                       {stat.value}
                     </h3>
-
-                    <p className="mt-2 text-xs text-muted-foreground">
+                    <p className="mt-1 text-xs uppercase tracking-[0.16em] text-fg-muted">
                       {stat.label}
                     </p>
                   </div>
                 ))}
               </div>
             </motion.div>
-          </ScrollReveal>
+          </Reveal>
         </div>
       </div>
     </section>
