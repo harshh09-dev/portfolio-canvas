@@ -1,100 +1,67 @@
+# Phase 1.2 — Preserve & Enhance (not Redesign)
 
-# Phase 1 Refinement Plan
+Your uploaded portfolio is the source of truth. I will stop introducing new visual identity and instead reconcile the current implementation back toward the original, then enhance only the sections you called out.
 
-Goal: elevate the migrated portfolio from "working" to "handcrafted premium." No new routes yet — Home only. When this bar is met, we move to Phase 2.
+## Guiding rule
+For every section, diff current vs. original portfolio. If the current version isn't objectively better, revert to the original and enhance in place.
 
-## 1. Design System — make it visible
+## Scope of changes
 
-**src/styles.css** — single source of truth, applied everywhere.
+### 1. Homepage — restore minimal editorial preview
+- Keep sections: Hero → What I Do → Selected Projects (featured only) → OFF THE CLOCK → Skills/Tools → Contact CTA.
+- Remove from homepage: Journey timeline, GitHub contribution graph, full skills grid, full project list. These live on their dedicated pages.
+- Ensure homepage reads as a preview that funnels to About / Projects / Creative / Guestbook.
 
-- Rhythm tokens: `--section-y` (clamp 96–160px), `--section-y-tight` (64–96px), `--container-max: 1280px`, `--container-pad` (clamp 20–48px), `--stack-lg/md/sm`.
-- Typography scale (fluid clamp, one system):
-  - `--fs-display`: clamp(4rem, 12vw, 12rem) — Instrument Serif, display only
-  - `--fs-h1`: clamp(2.5rem, 5vw, 4.5rem)
-  - `--fs-h2`: clamp(2rem, 4vw, 3.25rem)
-  - `--fs-h3`: clamp(1.5rem, 2.5vw, 2rem)
-  - `--fs-body`: 1rem–1.125rem, `--fs-eyebrow`: 0.75rem tracking .16em uppercase
-- Font families: Instrument Serif (display), Outfit (sans body/headings), JetBrains Mono (eyebrow/labels). Loaded via `<link>` in `__root.tsx`.
-- Colors (oklch): `--bg`, `--surface`, `--surface-2`, `--fg`, `--fg-muted`, `--border`, `--border-strong`, `--accent-signature` (ember), `--accent-mint`, `--accent-pink`, `--accent-cool`.
-- Utility classes: `.section` (padding-block: var(--section-y)), `.container-editorial` (max-width + pad), `.eyebrow`, `.display`, `.h1/h2/h3`, `.prose-editorial`, `.divider-hair`.
-- Shadcn HSL bridge kept intact.
+### 2. Loader — restore original
+- Restore original portfolio loader (cinematic, one-time on entry).
+- Session-scoped: `sessionStorage` flag so internal navigation never re-triggers it.
+- Slightly longer duration, smooth exit, integrate `hi_anime.png` artwork.
 
-Every section refactored to use `<section className="section"><div className="container-editorial">`. No more ad-hoc py-* / max-w-* / px-*.
+### 3. What I Do — enhance, don't replace
+- Keep existing section structure and copy.
+- Add device-specific mockup compositions (desktop, laptop, tablet, mobile) — each with its own framing, not one layout resized.
+- Keep it compact; no long scroll.
 
-## 2. Hero — refined
+### 4. OFF THE CLOCK — enhance in place
+- Already renamed. Improve image presentation, composition, spacing, hierarchy inspired by references.
+- Single premium CTA → `/creative`.
+- Keep existing storytelling copy.
 
-- Height: `min-h-[88svh]` on laptop (was 100svh), `min-h-[100svh]` mobile only. Content vertically centered via `place-items-center` grid, not space-between.
-- Remove "Available for select engagements — 2026" line.
-- CTA group: primary + secondary, right-aligned baseline, magnetic hover on ≥lg.
-- Meta strip (location/role) sits inside container, not pinned to bottom edge — compresses hero.
-- Signature ember glow retained, tightened radius.
-- Motion: SplitText line reveal on headline via GSAP, stagger .06s, ease `expo.out`, 0.9s. Serif tagline fades in +0.2s. CTAs .1s later.
+### 5. About page — becomes the storytelling hub
+Assemble: Hero intro → Personal intro → Skills overview → Journey timeline → GitHub contribution graph → Technologies → Philosophy → Personal interests → CTA. Move Journey + GitHub off homepage into here.
 
-## 3. Motion architecture
+### 6. Projects
+- Homepage: featured projects only (small curated set).
+- `/projects`: every project, each with Overview / Challenge / Solution / Process / Outcome / Gallery / Tech / Links. Sticky-scroll storytelling lives here, not on home.
 
-New: `src/lib/motion.ts` — shared eases, durations, GSAP registration guard.
-New: `src/hooks/useReveal.ts` — GSAP ScrollTrigger reveal (fade+y, stagger children if requested).
-New: `src/hooks/useMagnetic.ts` — pointer-follow transform for buttons (desktop only, respects reduced motion).
-New: `src/components/motion/Reveal.tsx` — wraps children, uses GSAP+ScrollTrigger (replaces framer-motion `whileInView` for consistency).
-New: `src/components/motion/SplitReveal.tsx` — split-type + GSAP line/word reveal.
-New: `src/components/motion/Magnetic.tsx` — magnetic hover wrapper.
-New: `src/components/motion/ParallaxImage.tsx` — GSAP y parallax on scroll.
+### 7. Guestbook — merge
+- Single `/guestbook` route combining Guest Book + Signature Book flows (sign-in + signature grid on one page).
+- Remove any duplicate route.
 
-Every section: heading gets SplitReveal, body copy gets Reveal (stagger .08), images get ParallaxImage or scale/mask reveal. All respect `prefers-reduced-motion`.
+### 8. Complete every nav route
+Home, About, Projects, OFF THE CLOCK (`/creative`), Lyrics & Logic, Guestbook, Contact — all real pages, no placeholders.
 
-## 4. Project Showcase — redesigned
+### 9. Motion — dial back
+Keep only: text/image reveal, subtle parallax, stagger, magnetic buttons, page transitions. Remove decorative animation that distracts.
 
-Rewrite `projects-section.tsx` as premium case-study layout:
+### 10. Architecture — data files
+All copy, nav, projects, timeline, skills, tech, creative previews, socials, contact into `src/data/*.ts`. Components import; no hardcoded content.
 
-- Sticky left column (≥lg): active project's title, index (01 / 05), description, feature list, tech chips, live/repo CTAs. Animated crossfade between projects (framer-motion AnimatePresence).
-- Right column: large editorial screenshots — replace phone+laptop mockup grid with a single hero screenshot per card (aspect 16/10, rounded-2xl, border, subtle shadow-elegant, scale-in on scroll).
-- Card spacing: `gap-y-[clamp(120px,15vh,200px)]`.
-- ScrollTrigger drives which project is active (center-nearest heuristic — keep existing logic).
-- Progress rail: keep, restyle to hair-line with ember gradient fill; avatar marker retained but only on ≥xl.
-- Mobile: full-width screenshot + inline info block (no sticky).
-- Card hover: subtle scale(1.01) + shadow lift.
+## Technical notes
+- Loader: `sessionStorage.getItem('averse:loaded')` gate in `PremiumLoader`; render null when set.
+- Guestbook merge: keep `/guestbook`, delete `/signature-book` route file (if present), consolidate hook usage.
+- About page: split current `AboutPreview` into a lean homepage teaser + full `/about` page composed of dedicated section components (`JourneyTimeline`, `GithubContributions`, `Philosophy`, `Interests`).
+- Projects page: extend `projects-data.ts` schema with `challenge`, `solution`, `process`, `outcome`, `gallery`, `links` fields; render sticky case-study layout only on `/projects`.
+- Data files to add/verify: `src/data/{site,nav,hero,skills,tech,projects,journey,creative,socials,contact}.ts`.
 
-## 5. About preview
+## Order of execution
+1. Restore loader + session gate.
+2. Audit homepage; strip Journey/GitHub/overflow sections.
+3. Build/complete About, Projects, Creative, Lyrics & Logic, Guestbook, Contact pages.
+4. Enhance What I Do with distinct device mockups.
+5. Polish OFF THE CLOCK composition.
+6. Move remaining hardcoded strings into `src/data/*.ts`.
+7. Build + multi-viewport visual verification.
 
-- Restore split layout: image on one side (parallax, rounded-2xl, aspect-[4/5]), copy on the other.
-- Serif quote pull-out.
-- Stats row (years / projects / stack).
-- Image slot uses a themed gradient placeholder if asset missing (documented) — do NOT block on assets.
-
-## 6. Loader + page transition
-
-- New `src/components/layout/PremiumLoader.tsx`: full-viewport, dark bg, animated logo mark (name letters split reveal), progress bar (0→100 tied to document.readyState + fonts.ready), exit anim (mask wipe up). Mount in `__root.tsx`, unmount after 1.2s min.
-- PageTransition already exists — refine to mask-wipe using framer-motion.
-
-## 7. Navbar — theme toggle fix
-
-- Read/write `localStorage.theme`, toggle `.dark` on `<html>`.
-- Use `useEffect` after mount to avoid hydration mismatch; icon swaps via framer-motion.
-- Keep sticky glass nav; refine blur + border tokens.
-
-## 8. Sections to unify (spacing + motion + tokens)
-
-WhatIDo, AboutPreview, SkillsSection, CreativeSide, LyricsAndLogic (Spotify card + interactive cards must be preserved and polished), ContactCTA. Each: `.section` wrapper, `.container-editorial`, eyebrow + h2 (SplitReveal), Reveal-wrapped children, consistent divider-hair between sections.
-
-## 9. Files touched (approx)
-
-**Create:** src/lib/motion.ts, src/hooks/useReveal.ts, src/hooks/useMagnetic.ts, src/components/motion/{Reveal,SplitReveal,Magnetic,ParallaxImage}.tsx, src/components/layout/PremiumLoader.tsx.
-
-**Rewrite:** src/styles.css, HeroSection, projects-section, project-card, sticky-info-panel, AboutPreview, LyricsAndLogic, CreativeSide, SkillsSection, WhatIDo, ContactCTA, Navbar, __root.tsx, PageTransition.
-
-**Deps to add:** `split-type` (already planned), `gsap` + `@gsap/react` (verify installed).
-
-## 10. Validation
-
-- `bun run build` green.
-- Manual Playwright screenshot at 375 / 768 / 1280 / 1600. Verify hero fits 1280×720 without scroll. Verify project showcase sticky panel on ≥1024.
-- Verify theme toggle flips `.dark` on html and persists.
-- Reduced-motion: all animations disabled/instant.
-
-## Risks
-
-- GSAP + framer-motion coexisting: keep GSAP for scroll-driven, framer for enter/exit — no overlap on same element.
-- Missing images: gradient placeholders documented; not a blocker.
-- Bundle size grows ~30kb (gsap+split-type); acceptable for premium.
-
-Reply `go` to execute.
+## Out of scope this pass
+No new visual identity, no palette changes, no typography overhaul. Preserve current tokens; only revert where they drifted from the original.
