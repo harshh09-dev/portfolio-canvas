@@ -15,14 +15,13 @@ export const nav = {
   primary: [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
-    { name: "Work", href: "/projects" },
+    { name: "Projects", href: "/projects" },
     { name: "Off The Clock", href: "/creative" },
-    { name: "Blog", href: "/blog" },
+    { name: "Lyrics & Logic", href: "/lyrics-and-logic" },
   ],
   more: [
-    { name: "Links", desc: "Socials & profiles", href: "/links" },
-    { name: "Uses", desc: "My gear & software", href: "/uses" },
     { name: "Guestbook", desc: "Sign my wall", href: "/guestbook" },
+    { name: "Contact", desc: "Say hello", href: "/contact" },
   ],
 };
 
