@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProjectsRouteImport } from './routes/projects'
-import { Route as LyricsAndLogicRouteImport } from './routes/lyrics-and-logic'
 import { Route as GuestbookRouteImport } from './routes/guestbook'
 import { Route as CreativeRouteImport } from './routes/creative'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -20,11 +19,6 @@ import { Route as IndexRouteImport } from './routes/index'
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LyricsAndLogicRoute = LyricsAndLogicRouteImport.update({
-  id: '/lyrics-and-logic',
-  path: '/lyrics-and-logic',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuestbookRoute = GuestbookRouteImport.update({
@@ -59,7 +53,6 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/creative': typeof CreativeRoute
   '/guestbook': typeof GuestbookRoute
-  '/lyrics-and-logic': typeof LyricsAndLogicRoute
   '/projects': typeof ProjectsRoute
 }
 export interface FileRoutesByTo {
@@ -68,7 +61,6 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/creative': typeof CreativeRoute
   '/guestbook': typeof GuestbookRoute
-  '/lyrics-and-logic': typeof LyricsAndLogicRoute
   '/projects': typeof ProjectsRoute
 }
 export interface FileRoutesById {
@@ -78,7 +70,6 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/creative': typeof CreativeRoute
   '/guestbook': typeof GuestbookRoute
-  '/lyrics-and-logic': typeof LyricsAndLogicRoute
   '/projects': typeof ProjectsRoute
 }
 export interface FileRouteTypes {
@@ -89,17 +80,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/creative'
     | '/guestbook'
-    | '/lyrics-and-logic'
     | '/projects'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/about'
-    | '/contact'
-    | '/creative'
-    | '/guestbook'
-    | '/lyrics-and-logic'
-    | '/projects'
+  to: '/' | '/about' | '/contact' | '/creative' | '/guestbook' | '/projects'
   id:
     | '__root__'
     | '/'
@@ -107,7 +90,6 @@ export interface FileRouteTypes {
     | '/contact'
     | '/creative'
     | '/guestbook'
-    | '/lyrics-and-logic'
     | '/projects'
   fileRoutesById: FileRoutesById
 }
@@ -117,7 +99,6 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   CreativeRoute: typeof CreativeRoute
   GuestbookRoute: typeof GuestbookRoute
-  LyricsAndLogicRoute: typeof LyricsAndLogicRoute
   ProjectsRoute: typeof ProjectsRoute
 }
 
@@ -128,13 +109,6 @@ declare module '@tanstack/react-router' {
       path: '/projects'
       fullPath: '/projects'
       preLoaderRoute: typeof ProjectsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/lyrics-and-logic': {
-      id: '/lyrics-and-logic'
-      path: '/lyrics-and-logic'
-      fullPath: '/lyrics-and-logic'
-      preLoaderRoute: typeof LyricsAndLogicRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guestbook': {
@@ -181,7 +155,6 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   CreativeRoute: CreativeRoute,
   GuestbookRoute: GuestbookRoute,
-  LyricsAndLogicRoute: LyricsAndLogicRoute,
   ProjectsRoute: ProjectsRoute,
 }
 export const routeTree = rootRouteImport
