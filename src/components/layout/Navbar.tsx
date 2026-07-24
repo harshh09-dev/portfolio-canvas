@@ -117,39 +117,41 @@ export default function Navbar() {
               </a>
             ))}
 
-            <div className="relative">
-              <button
-                onClick={() => setMoreOpen(!moreOpen)}
-                type="button"
-                aria-haspopup="menu"
-                aria-expanded={moreOpen}
-                className="flex items-center gap-1 rounded-full px-4 py-2 text-sm hover:bg-muted"
-              >
-                More <ChevronDown size={15} />
-              </button>
-              <AnimatePresence>
-                {moreOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 8 }}
-                    className="absolute right-0 mt-2 w-60 rounded-2xl border border-border bg-background p-2 shadow-xl"
-                  >
-                    {nav.more.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        onClick={() => setMoreOpen(false)}
-                        className="block rounded-xl px-4 py-3 hover:bg-muted"
-                      >
-                        <p className="font-medium">{item.name}</p>
-                        <p className="text-xs text-muted-foreground">{item.desc}</p>
-                      </a>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+            {nav.more.length > 0 && (
+              <div className="relative">
+                <button
+                  onClick={() => setMoreOpen(!moreOpen)}
+                  type="button"
+                  aria-haspopup="menu"
+                  aria-expanded={moreOpen}
+                  className="flex items-center gap-1 rounded-full px-4 py-2 text-sm hover:bg-muted"
+                >
+                  More <ChevronDown size={15} />
+                </button>
+                <AnimatePresence>
+                  {moreOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 8 }}
+                      className="absolute right-0 mt-2 w-60 rounded-2xl border border-border bg-background p-2 shadow-xl"
+                    >
+                      {nav.more.map((item) => (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          onClick={() => setMoreOpen(false)}
+                          className="block rounded-xl px-4 py-3 hover:bg-muted"
+                        >
+                          <p className="font-medium">{item.name}</p>
+                          <p className="text-xs text-muted-foreground">{item.desc}</p>
+                        </a>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            )}
           </nav>
 
           <div className="flex items-center gap-2 border-l border-border/20 pl-3">
