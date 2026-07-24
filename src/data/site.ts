@@ -17,12 +17,10 @@ export const nav = {
     { name: "About", href: "/about" },
     { name: "Projects", href: "/projects" },
     { name: "Off The Clock", href: "/creative" },
-    { name: "Lyrics & Logic", href: "/lyrics-and-logic" },
+    { name: "Guestbook", href: "/guestbook" },
+    { name: "Contact", href: "/contact" },
   ],
-  more: [
-    { name: "Guestbook", desc: "Sign my wall", href: "/guestbook" },
-    { name: "Contact", desc: "Say hello", href: "/contact" },
-  ],
+  more: [] as { name: string; desc: string; href: string }[],
 };
 
 export const socials = [
