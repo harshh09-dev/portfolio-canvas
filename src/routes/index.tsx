@@ -28,54 +28,69 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
+/**
+ * Homepage rhythm — no two consecutive sections share a background.
+ *  Hero(cream) → What I Do(quiet) → About(warm) → Skills(quiet,tight-with-About)
+ *  → Projects(quiet) → Off The Clock(warm-rich) → Lyrics(quiet,tight)
+ *  → Contact(warm).
+ * Vertical spacing intentionally uneven per brief.
+ * AboutPreview owns its own "More about me" CTA, so no ViewMore under it.
+ */
 function Home() {
   return (
     <>
-      <HeroSection />
-      <div className="divider-hair container-editorial" />
+      <div className="section-bg-cream">
+        <HeroSection />
+      </div>
 
-      <section id="what-i-do">
-        <WhatIDo />
-        <ViewMore href="/about" label="More about how I work" />
-      </section>
+      {/* Hero → What I Do: generous */}
+      <div className="section-bg-quiet" style={{ scrollMarginTop: "5rem" }}>
+        <section id="what-i-do" style={{ paddingTop: "clamp(3rem, 6vw, 5rem)" }}>
+          <WhatIDo />
+          <ViewMore href="/about" label="More about how I work" />
+        </section>
+      </div>
 
-      <div className="divider-hair container-editorial" />
+      {/* What I Do → About: moderate */}
+      <div className="section-bg-warm">
+        <section id="about" style={{ paddingTop: "clamp(2rem, 4vw, 3.5rem)" }}>
+          <AboutPreview />
+        </section>
 
-      <section id="about">
-        <AboutPreview />
-        <ViewMore href="/about" label="Read my full story" />
-      </section>
+        {/* About → Skills: tight (same "about me" thought) */}
+        <section id="skills" style={{ paddingTop: 0 }}>
+          <SkillsSection />
+          <ViewMore href="/about" label="See the full toolkit" />
+        </section>
+      </div>
 
-      <div className="divider-hair container-editorial" />
+      {/* Skills → Projects: generous (new chapter) */}
+      <div className="section-bg-quiet">
+        <section id="projects" style={{ paddingTop: "clamp(3rem, 6vw, 5rem)" }}>
+          <ProjectShowcase />
+          <ViewMore href="/projects" label="Browse every project" />
+        </section>
+      </div>
 
-      <section id="skills">
-        <SkillsSection />
-        <ViewMore href="/about" label="See the full toolkit" />
-      </section>
+      {/* Projects → Off The Clock: generous (tonal shift) */}
+      <div className="section-bg-warm-rich">
+        <section id="off-the-clock" style={{ paddingTop: "clamp(3rem, 6vw, 5rem)" }}>
+          <CreativeSide />
+          <ViewMore href="/creative" label="Enter the studio" />
+        </section>
+      </div>
 
-      <div className="divider-hair container-editorial" />
+      {/* Off The Clock → Lyrics & Logic: tight (both personal) */}
+      <div className="section-bg-quiet">
+        <section id="lyrics-and-logic" style={{ paddingTop: 0 }}>
+          <LyricsAndLogic />
+        </section>
+      </div>
 
-      <section id="projects">
-        <ProjectShowcase />
-        <ViewMore href="/projects" label="Browse every project" />
-      </section>
-
-      <div className="divider-hair container-editorial" />
-
-      <section id="off-the-clock">
-        <CreativeSide />
-        <ViewMore href="/creative" label="Enter the studio" />
-      </section>
-
-      <div className="divider-hair container-editorial" />
-
-      <section id="lyrics-and-logic">
-        <LyricsAndLogic />
-      </section>
-
-      <div className="divider-hair container-editorial" />
-
-      <ContactCTA />
+      {/* Lyrics & Logic → Contact: generous (final pause) */}
+      <div className="section-bg-warm">
+        <ContactCTA />
+      </div>
     </>
   );
 }
