@@ -83,8 +83,8 @@ function Card({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.8, ease: EASE, delay }}
-      whileHover={{ y: -6 }}
-      className="flex flex-col rounded-3xl border border-border bg-card p-7 transition-colors duration-300 hover:border-border-strong"
+      whileHover={{ y: -3 }}
+      className="flex flex-col rounded-3xl border border-border/50 bg-transparent p-7 transition-colors duration-300 hover:border-border"
     >
       {children}
     </motion.div>
@@ -96,9 +96,8 @@ export function BehindScenes() {
     <section className="mx-auto w-full max-w-[1400px] px-6 py-24 md:py-32">
       <div className="mb-14">
         <p className="eyebrow mb-5">Behind the curtains</p>
-        <h2 className="font-serif text-5xl leading-tight text-balance sm:text-6xl">
-          Decoding <span className="text-gradient italic">logic</span>{" "}
-          &amp;&amp; the lyrics
+        <h2 className="font-serif text-5xl leading-tight text-balance sm:text-6xl text-fg">
+          Decoding logic &amp;&amp; the lyrics
         </h2>
       </div>
 
@@ -147,8 +146,8 @@ export function BehindScenes() {
         {/* Guestbook */}
         <Card delay={0.08}>
           <p className="eyebrow mb-4">Visitors</p>
-          <h3 className="font-serif text-4xl leading-none">
-            Leave your <span className="text-gradient italic">signature</span>
+          <h3 className="font-serif text-4xl leading-none text-fg">
+            Leave your signature
           </h3>
           <p className="mt-4 text-muted-foreground">
             Let me know you were here.

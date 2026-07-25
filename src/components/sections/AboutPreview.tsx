@@ -33,8 +33,7 @@ export default function AboutPreview() {
             <p className="text-eyebrow">A little about me</p>
           </Reveal>
           <SplitReveal as="h2" className="section-heading" split="words">
-            Turning imagination into{" "}
-            <span className="work-text">interaction.</span>
+            Turning imagination into interaction.
           </SplitReveal>
         </div>
 
@@ -89,11 +88,9 @@ export default function AboutPreview() {
               })}
             </div>
 
-            <a
-              href="/about"
-              className="inline-flex items-center gap-2 rounded-full border border-border-strong px-5 py-2.5 text-sm font-medium text-fg transition-colors hover:bg-surface"
-            >
-              More about me <ArrowRight size={14} />
+            <a href="/about" className="btn-editorial group">
+              More about me
+              <ArrowRight size={14} className="btn-editorial-arrow" />
             </a>
           </Reveal>
 
@@ -146,25 +143,27 @@ export default function AboutPreview() {
                 </Swiper>
               </div>
 
-              <div className="mt-10 grid grid-cols-3 gap-4">
-                {stats.map((stat) => (
+              {/* Un-carded stat strip — metadata, not content */}
+              <div className="mt-10 grid grid-cols-3 items-center">
+                {stats.map((stat, i) => (
                   <div
                     key={stat.label}
-                    className="glass-card rounded-2xl p-5 text-center"
+                    className={`stat-block ${i > 0 ? "border-l border-border/60" : ""}`}
                   >
                     <h3
-                      className="gradient-text"
+                      className="text-fg"
                       style={{
                         fontFamily: "var(--font-serif)",
-                        fontSize: "1.75rem",
-                        fontWeight: 400,
-                        letterSpacing: "-0.02em",
+                        fontSize: "clamp(2rem, 3.2vw, 2.75rem)",
+                        fontWeight: 300,
+                        letterSpacing: "-0.03em",
+                        lineHeight: 1,
                         fontVariationSettings: '"SOFT" 100',
                       }}
                     >
                       {stat.value}
                     </h3>
-                    <p className="mt-1 text-xs uppercase tracking-[0.16em] text-fg-muted">
+                    <p className="mt-2 text-[0.68rem] uppercase tracking-[0.18em] text-fg-subtle">
                       {stat.label}
                     </p>
                   </div>
