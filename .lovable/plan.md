@@ -1,94 +1,66 @@
 
-# Phase 1.3 — Preserve, Enhance, Don't Replace
+# A-Verse Art Direction Pass
 
-The uploaded portfolio stays the source of truth. This pass reconciles the current build with the new brief: single-scroll home, tighter navigation, calmer palette, and Lyrics & Logic demoted to a homepage preview.
+This is executed in the exact order you specified. No new pages, no new routes, no new components — only variants and usage/hierarchy changes on what already exists.
 
-## 1. Palette recalibration (subtle, not flashy)
-- Keep deep matte black canvas.
-- Reduce the pink → yellow → blue gradient to accent-only usage: hover states, CTA glow, artwork rims, small highlights. No large gradient washes.
-- Introduce a warm-white / muted-silver / subtle-blue neutral system for text and surfaces so gradients feel like jewelry, not wallpaper.
-- Audit `styles.css` and every section: strip large gradient backgrounds (hero wash, section overlays) and replace with matte black + hairline dividers.
+## Part 0 — Structural Fixes (bugs, done first)
 
-## 2. Navigation
-Navbar becomes exactly: Home · About · Projects · OFF THE CLOCK · Guestbook · Contact.
-- Remove Lyrics & Logic from primary and secondary nav.
-- Remove the `/lyrics-and-logic` route file (delete). Redirect any lingering link to `/#lyrics-and-logic` anchor on home.
+### 0.1 Projects section
+- Audit `src/components/projects/projects-data.ts`: confirm each project's `images.main`, `images.mobile1`, `images.mobile2` point to real, correct screenshots for that project (fix any RuneCareer/RuneAI/RuneLearn/RuneHub/Old Portfolio cross-wiring).
+- Replace any missing/broken image references with valid asset paths (or upload via `lovable-assets` if source screenshots exist in project).
+- Replace the "random-feeling" accent palette with a deliberate rotating order documented in a comment at the top of `projects-data.ts` (e.g. red → slate → maroon → amber → blue, cycled in a fixed sequence tied to project index).
+- Fix z-index/stacking on the "Venture Showcase" background marquee text in `projects-section.tsx` so it renders behind content and never bleeds through the sticky navbar (navbar `z-50`; marquee text `z-0`/negative, or clip to section with `overflow-hidden` + isolate).
 
-## 3. Homepage — single scroll, preview-only
-Order:
-1. Hero
-2. What I Do (preview) → View More → `/about` (services also surfaced on About)
-3. About Me (preview) → View More → `/about`
-4. Skills & Technologies (preview) → View More → `/about`
-5. Featured Projects (preview) → View More → `/projects`
-6. OFF THE CLOCK (preview) → View More → `/creative`
-7. Lyrics & Logic (Spotify / GitHub / Guestbook cards, homepage-only)
-8. Contact CTA → `/contact`
+### 0.2 What I Do
+- Populate each of the four device frames (Desktop/Laptop/Tablet/Mobile) in `WhatIDo.tsx` with real representative UI content — reuse cropped project screenshots from `projects-data`, not abstract SVG placeholders.
+- Fix Mobile block heading clipping under the sticky nav (add proper `scroll-mt` / section top padding).
 
-Every preview ends with a single small "View More →" affordance in a consistent style.
+## Part 1 — Art Direction (in the exact order you gave)
 
-## 4. Section-specific refinements
-- **Hero**: keep current composition; remove any residual gradient background; keep magnetic CTAs; verify laptop 1280/1366 fit.
-- **What I Do**: keep 4 device mockups (desktop/laptop/tablet/mobile) with distinct compositions; compact, no long scroll.
-- **About preview**: short editorial intro + portrait/quote. Full Journey timeline + GitHub graph live only on `/about`.
-- **Skills preview**: red-accent marquee + a small tools grid; "View More" to About.
-- **Featured Projects**: 3 featured entries from `projects-data.ts`; full sticky case-study only on `/projects`.
-- **OFF THE CLOCK preview**: enhance current composition (asymmetric editorial), single premium CTA to `/creative`.
-- **Lyrics & Logic**: three cards on home — Spotify (live API card), GitHub (live API card), Guestbook (link card). Preserve the premium card components from the original upload; no simplified replacements.
-- **Contact CTA**: keep current; ensure it points to `/contact`.
+3. **Gradient discipline (Section 8)** — highest leverage, done early. Remove gradient italic from: Lyrics & Logic's "logic", Guestbook card's "signature", What I Do's "screen it lives on", About's "interaction". Keep on Hero tagline + Contact's "something real" + Off The Clock's "clock." + one About moment. Render removed accents in solid `text.primary`.
 
-## 5. About page
-Hero → My Story → Journey Timeline → GitHub Contribution Graph → Contact CTA. Skills/tech/philosophy/interests fold into "My Story" and remain here (not on home in detail).
+4. **Navbar active state (Section 1)** — soften solid-black active pill to a low-opacity fill or a text-weight + dot indicator. Leave spacing/transparency untouched.
 
-## 6. Projects page
-Featured Projects → full Project Showcase (sticky case-study) → GitHub section.
+5. **Hero (Section 9)** — restore subtitle legibility (drop gradient or add subtle scrim), tighten name↔subtitle gap, pull Location/Role up closer to CTAs with a shared hairline baseline.
 
-## 7. OFF THE CLOCK page
-Photography · Writing · UI Components. Editorial layouts, large imagery, no CTAs stacked — one primary contact CTA at the bottom.
+6. **Card language (Section 5)**:
+   - About stats: strip card/shadow/border → three large numerals + labels on section background, separated by hairline dividers.
+   - Lyrics & Logic cards: lighter 1px border, no shadow, quieter fill — read as one family, not three competing cards.
+   - Project cards: leave as the heaviest card type (after 0.1 fix).
 
-## 8. Guestbook page
-Single merged experience: hero, visitor messages grid, "leave a message" form. Google + GitHub OAuth via Supabase Auth. Anyone reads, only signed-in posts. Realtime subscription for new messages.
+7. **Button hierarchy (Section 6)** — define 4 variants and apply globally:
+   - Primary (filled): Hero "See selected work", Contact email CTA only.
+   - Secondary (outlined): Hero "Let's connect" and true second-actions.
+   - Editorial (text + arrow): every `<ViewMore>` — restyle the shared component so all preview links match.
+   - Minimal (underline only): inline body links.
+   - Deduplicate About preview: keep one of "More about me" / "Read my full story" as Editorial.
 
-## 9. Contact page
-Simple editorial page: email, socials, short note. No form necessity.
+8. **Background rhythm + vertical spacing (Sections 2 + 11)** — alternate section backgrounds Hero(cream) → What I Do(near-white) → About(warm tint) → Projects(near-white) → Off The Clock(richer tint) → Lyrics & Logic(near-white) → Contact(soft tint). Adjust divider/spacing between sections per your uneven rhythm (Hero→What I Do generous, About→Skills tight, etc.).
 
-## 10. Loader
-Keep the current session-gated cinematic loader with anime artwork. Only tweaks: slightly longer exit, ensure it never re-triggers on internal navigation.
+9. **What I Do composition (Section 3)** — differentiate the four blocks:
+   - 01 Desktop: wide bleed, left copy / right dominant frame.
+   - 02 Laptop: horizontal scroll frame bleeding off left edge.
+   - 03 Tablet: centered portrait, generous negative space.
+   - 04 Mobile: smaller, right/bottom-anchored, less ceremony.
 
-## 11. Adaptive UI (four experiences)
-For each section, define distinct compositions at mobile / tablet / laptop / desktop — not one layout resized. Priorities:
-- Mobile: single column, compact spacing, reduced motion, smaller imagery.
-- Tablet: 2-col where appropriate, dedicated crops.
-- Laptop: primary design target (already tuned).
-- Desktop: more negative space, asymmetric layouts, larger storytelling.
+10. **Off The Clock (Section 4)** — remove the duplicate "Enter the studio" CTA; make Photography visibly taller than Writing.
 
-## 12. Motion
-Keep: text reveal, image reveal, subtle parallax, stagger, magnetic buttons, page transitions. Remove any decorative animation that doesn't earn its place. Mobile trims to reveals + fades only.
+11. **Projects pacing (Section 10)** — first featured project renders confidently larger than the rest; remove redundant per-card "View Case Study" buttons (whole card remains the link); vary vertical rhythm between projects.
 
-## 13. Data architecture
-All content in `src/data/*.ts`:
-- `site.ts` (nav updated: remove Lyrics & Logic)
-- `services.ts`, `skills.ts`, `projects-data.ts`, `journey.ts`, `creative.ts`
-- Add `lyricsLogic.ts` for the three-card config on home
-- Add `contact.ts` for email/socials/note
+12. **Final pass** — verify against Acceptance Criteria: no broken images, gradient count ≤ 30% of headings, no duplicate CTAs, no two consecutive sections sharing background treatment, About stats un-carded, Hero subtitle legible, no new components/routes/colors introduced.
 
-## 14. Cleanup / deletions
-- Delete `src/routes/lyrics-and-logic.tsx`.
-- Delete unused imports/components that duplicated Lyrics & Logic page content.
-- Remove homepage "About/Journey/GitHub" detailed variants if any linger.
+## Technical notes
 
-## Order of execution
-1. Palette pass in `styles.css` (kill large gradient washes, introduce warm-white/silver/subtle-blue neutrals).
-2. Nav update in `data/site.ts`; delete `lyrics-and-logic` route.
-3. Rebuild homepage as single-scroll with all 8 previews + "View More" affordances.
-4. Move Lyrics & Logic components onto the homepage; preserve premium Spotify / GitHub / Guestbook cards from the original upload.
-5. Reduce About/Projects/Creative pages to their briefed structures.
-6. Guestbook: merge, wire Google + GitHub OAuth via Supabase, realtime messages.
-7. Adaptive audit at 390 / 800 / 1280 / 1600 with Playwright screenshots.
+- All color changes pull from existing tokens in `src/styles.css`. No new hex/oklch values invented.
+- Background rhythm implemented via a small set of section-background utility classes in `styles.css`, applied on the section elements in `src/routes/index.tsx`.
+- Editorial button variant added as a variant of the existing `ViewMore` component, not a new component.
+- Screenshots at 1280×720 and 375×812 via Playwright after each major step for verification.
 
 ## Out of scope
-- No new visual identity beyond the palette tone-down.
-- No typography overhaul (Fraunces + Manrope stays).
-- No new business logic outside the Guestbook Supabase wiring.
 
-Approve and I'll ship it in this order.
+- No new pages, routes, or components.
+- No migration work, no new libraries.
+- No changes to Guestbook auth wiring or Supabase logic.
+- No changes to Lyrics & Logic section's page-level presence (stays homepage-only).
+
+This is a lot of surface area. I'll work through steps 0.1 → 12 sequentially and verify after each cluster.
