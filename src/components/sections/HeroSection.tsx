@@ -111,9 +111,8 @@ export default function HeroSection() {
             {site.displayName}
           </h1>
 
-          {/* Subtitle — Hero is the one place gradient italic stays.
-              Slight scrim behind it lifts contrast against the cream wash. */}
-          <div className="relative mt-2 md:mt-4">
+          {/* Subtitle — Hero is the one place gradient italic stays. */}
+          <div className="relative mt-2 md:mt-4" style={{ fontSize: "clamp(1.5rem, 3.2vw, 2.5rem)" }}>
             <SplitReveal
               as="p"
               className="text-serif-italic gradient-text relative z-10"
@@ -121,7 +120,6 @@ export default function HeroSection() {
               duration={1}
               stagger={0.05}
               split="words"
-              style={{ fontSize: "clamp(1.5rem, 3.2vw, 2.5rem)" }}
             >
               {site.tagline}
             </SplitReveal>
