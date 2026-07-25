@@ -1,8 +1,6 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 import Reveal from "@/components/motion/Reveal";
 import SplitReveal from "@/components/motion/SplitReveal";
-import Magnetic from "@/components/motion/Magnetic";
 import { offTheClock, creativeTeaser } from "@/data/creative";
 
 export default function CreativeSide() {
@@ -22,16 +20,16 @@ export default function CreativeSide() {
           </Reveal>
         </div>
 
-        {/* Preview strip — asymmetric editorial layout */}
+        {/* Asymmetric editorial layout — Photography taller than Writing */}
         <div className="grid grid-cols-12 gap-3 md:gap-5">
-          {/* Large */}
+          {/* Photography — visibly taller (cinematic) */}
           <Reveal className="col-span-12 md:col-span-7">
             <motion.a
               href={creativeTeaser.ctaHref}
               whileHover={{ y: -4 }}
               transition={{ duration: 0.5, ease: [0.7, 0, 0.3, 1] }}
               className="group block relative overflow-hidden rounded-2xl border border-border/60"
-              style={{ aspectRatio: "16 / 11" }}
+              style={{ aspectRatio: "5 / 6" }}
             >
               <motion.img
                 src={offTheClock[0].image}
@@ -60,7 +58,7 @@ export default function CreativeSide() {
             </motion.a>
           </Reveal>
 
-          {/* Two stacked */}
+          {/* Writing + Playgrounds stacked, shorter */}
           <div className="col-span-12 md:col-span-5 flex flex-col gap-3 md:gap-5">
             {offTheClock.slice(1).map((card, i) => (
               <Reveal key={card.title} delay={0.1 + i * 0.1}>
@@ -101,25 +99,8 @@ export default function CreativeSide() {
           </div>
         </div>
 
-        {/* Single premium CTA */}
-        <Reveal delay={0.3}>
-          <div className="mt-12 md:mt-16 flex justify-center">
-            <Magnetic>
-              <a
-                href={creativeTeaser.ctaHref}
-                className="group inline-flex items-center gap-3 rounded-full border border-border-strong bg-surface/40 backdrop-blur-md pl-6 pr-2 py-2 text-sm font-medium text-fg transition-transform hover:scale-[1.02]"
-              >
-                {creativeTeaser.ctaLabel}
-                <span
-                  className="grid place-items-center h-10 w-10 rounded-full"
-                  style={{ background: "var(--gradient-signature)" }}
-                >
-                  <ArrowUpRight size={16} className="text-black transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </span>
-              </a>
-            </Magnetic>
-          </div>
-        </Reveal>
+        {/* NOTE: the single CTA lives in index.tsx via <ViewMore>,
+            so this section no longer emits its own. */}
       </div>
     </section>
   );

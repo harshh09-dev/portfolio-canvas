@@ -103,19 +103,21 @@ export default function Navbar() {
           </motion.div>
 
           <nav className="flex items-center gap-1">
-            {nav.primary.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className={`rounded-full px-4 py-2 text-sm transition-colors ${
-                  location.pathname === item.href
-                    ? "bg-foreground text-background"
-                    : "hover:bg-muted"
-                }`}
-              >
-                {item.name}
-              </a>
-            ))}
+            {nav.primary.map((item) => {
+              const isActive = location.pathname === item.href;
+              return (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`rounded-full px-4 py-2 text-sm transition-colors ${
+                    isActive ? "nav-active font-medium" : "text-fg-muted hover:text-fg hover:bg-muted"
+                  }`}
+                >
+                  {item.name}
+                </a>
+              );
+            })}
 
             {nav.more.length > 0 && (
               <div className="relative">

@@ -1,3 +1,21 @@
+// ============================================================
+// Projects — data + accent rotation
+// ============================================================
+// Accent palette follows a documented rotating order tied to
+// project index. NOT random. The order is set by role in the
+// storytelling sequence rather than by hue:
+//
+//   0. rune           → red    (flagship, its actual brand color)
+//   1. runehub        → blue   (education/learning register)
+//   2. runelearn      → amber  (study/warm register)
+//   3. runecareer     → rose   (career/human register)
+//   4. runeai         → slate  (AI infra/neutral register)
+//   5. old-portfolio  → orange (archival register)
+//
+// If a project is added or reordered, keep the accent tied to
+// the project itself (its own brand), not the slot.
+// ============================================================
+
 export interface TechItem {
   name: string;
   icon: string;
@@ -23,6 +41,10 @@ export interface Project {
     main: string;
   };
   mainImageFit?: "cover" | "fill";
+  // Short human labels for branded mockup fallback screens
+  desktopLabel?: string;
+  mobileLabel1?: string;
+  mobileLabel2?: string;
 }
 
 const tech = {
@@ -42,6 +64,12 @@ const tech = {
   prisma: { name: "Prisma", icon: "/icons/Prisma_dark.svg" },
 };
 
+// NOTE: image paths intentionally blank. Each mockup component
+// renders a branded fallback (accent gradient + project title +
+// short label) instead of a broken-image icon. Drop real PNGs
+// into public/images/projects/ using the paths documented below
+// and they will replace the fallbacks automatically.
+
 export const projects: Project[] = [
   {
     id: "rune",
@@ -54,27 +82,19 @@ export const projects: Project[] = [
       "AI-powered tools for writing, summarizing, and content creation",
       "Developer utilities with JSON formatter, regex tester, and code tools",
     ],
-    tech: [
-      tech.react,
-      tech.typescript,
-      tech.nextjs,
-      tech.tailwind,
-      tech.runeai,
-      tech.framer,
-    ],
+    tech: [tech.react, tech.typescript, tech.nextjs, tech.tailwind, tech.runeai, tech.framer],
     gradient:
-      "linear-gradient(10deg, rgb(153, 27, 27) 49.9%, rgb(153, 27, 27) 81.7%, rgb(239, 68, 68) 99.88%, rgb(249, 215, 147) 113.5%)",
+      "linear-gradient(135deg, oklch(0.30 0.14 25) 0%, oklch(0.42 0.18 22) 55%, oklch(0.55 0.20 22) 100%)",
     accent: {
       dash: "bg-red-600",
       fill: "fill-red-600",
       text: "text-red-400",
       bg: "bg-red-600/20",
     },
-    images: {
-      mobile1: "/images/projects/rune-mobile-1.png",
-      mobile2: "/images/projects/rune-mobile-2.png",
-      main: "/images/projects/rune-main.png",
-    },
+    images: { mobile1: "", mobile2: "", main: "" },
+    desktopLabel: "145+ tools · dashboard",
+    mobileLabel1: "Toolkit",
+    mobileLabel2: "AI assist",
   },
   {
     id: "runehub",
@@ -87,27 +107,19 @@ export const projects: Project[] = [
       "RuneAI powered key insights for accelerated learning",
       "Developer focused UX with its own powerful custom CMS",
     ],
-    tech: [
-      tech.react,
-      tech.typescript,
-      tech.nextjs,
-      tech.tailwind,
-      tech.runeai,
-      tech.prism,
-    ],
+    tech: [tech.react, tech.typescript, tech.nextjs, tech.tailwind, tech.runeai, tech.prism],
     gradient:
-      "linear-gradient(10deg, rgb(41, 50, 203) 49.9%, rgb(41, 50, 203) 81.7%, rgb(121, 128, 255) 99.88%, rgb(249, 215, 147) 113.5%)",
+      "linear-gradient(135deg, oklch(0.28 0.10 250) 0%, oklch(0.38 0.14 250) 55%, oklch(0.55 0.14 240) 100%)",
     accent: {
       dash: "bg-blue-600",
       fill: "fill-blue-600",
       text: "text-blue-400",
       bg: "bg-blue-600/20",
     },
-    images: {
-      mobile1: "/images/projects/runehub-mobile-1.png",
-      mobile2: "/images/projects/runehub-mobile-2.png",
-      main: "/images/projects/runehub-main.png",
-    },
+    images: { mobile1: "", mobile2: "", main: "" },
+    desktopLabel: "62+ topics · library",
+    mobileLabel1: "Read",
+    mobileLabel2: "Trends",
   },
   {
     id: "runelearn",
@@ -120,27 +132,19 @@ export const projects: Project[] = [
       "Personalized Learning Roadmaps tailored to your study goals",
       "Advanced Doubt Solver providing in-depth explanations instantly",
     ],
-    tech: [
-      tech.react,
-      tech.typescript,
-      tech.nextjs,
-      tech.tailwind,
-      tech.runeai,
-      tech.vercel,
-    ],
+    tech: [tech.react, tech.typescript, tech.nextjs, tech.tailwind, tech.runeai, tech.vercel],
     gradient:
-      "linear-gradient(10deg, rgb(120, 53, 15) 49.9%, rgb(146, 64, 14) 81.7%, rgb(180, 83, 9) 99.88%, rgb(249, 215, 147) 113.5%)",
+      "linear-gradient(135deg, oklch(0.32 0.10 60) 0%, oklch(0.44 0.14 65) 55%, oklch(0.60 0.16 75) 100%)",
     accent: {
-      dash: "bg-amber-700",
-      fill: "fill-amber-700",
+      dash: "bg-amber-600",
+      fill: "fill-amber-600",
       text: "text-amber-400",
-      bg: "bg-amber-700/20",
+      bg: "bg-amber-600/20",
     },
-    images: {
-      mobile1: "/images/projects/runelearn-mobile-1.png",
-      mobile2: "/images/projects/runelearn-mobile-2.png",
-      main: "/images/projects/runelearn-main.png",
-    },
+    images: { mobile1: "", mobile2: "", main: "" },
+    desktopLabel: "Roadmap · study",
+    mobileLabel1: "Quiz",
+    mobileLabel2: "Flashcards",
   },
   {
     id: "runecareer",
@@ -153,27 +157,19 @@ export const projects: Project[] = [
       "LaTeX editor with live preview for academic CVs",
       "ATS checker plus AI-assisted cover and resignation letters",
     ],
-    tech: [
-      tech.react,
-      tech.typescript,
-      tech.nextjs,
-      tech.tailwind,
-      tech.runeai,
-      tech.framer,
-    ],
+    tech: [tech.react, tech.typescript, tech.nextjs, tech.tailwind, tech.runeai, tech.framer],
     gradient:
-      "linear-gradient(10deg, rgb(136, 19, 55) 49.9%, rgb(136, 19, 55) 81.7%, rgb(190, 24, 93) 99.88%, rgb(251, 207, 232) 113.5%)",
+      "linear-gradient(135deg, oklch(0.30 0.12 12) 0%, oklch(0.42 0.16 10) 55%, oklch(0.58 0.16 10) 100%)",
     accent: {
-      dash: "bg-red-600",
-      fill: "fill-red-600",
-      text: "text-red-400",
-      bg: "bg-red-600/20",
+      dash: "bg-rose-500",
+      fill: "fill-rose-500",
+      text: "text-rose-300",
+      bg: "bg-rose-500/20",
     },
-    images: {
-      mobile1: "/images/projects/runecareer-mobile-1.png",
-      mobile2: "/images/projects/runecareer-mobile-2.png",
-      main: "/images/projects/runecareer-main.png",
-    },
+    images: { mobile1: "", mobile2: "", main: "" },
+    desktopLabel: "Resume · builder",
+    mobileLabel1: "CV",
+    mobileLabel2: "Letters",
   },
   {
     id: "runeai",
@@ -186,28 +182,20 @@ export const projects: Project[] = [
       "Massive 500K context limit for deep document analysis",
       "Advanced Web Search and intelligent automated Tool Calling",
     ],
-    tech: [
-      tech.runeai,
-      tech.langgraph,
-      tech.tavily,
-      tech.appwrite,
-      tech.nextjs,
-      tech.vercel,
-    ],
+    tech: [tech.runeai, tech.langgraph, tech.tavily, tech.appwrite, tech.nextjs, tech.vercel],
     gradient:
-      "linear-gradient(12deg, rgb(63, 63, 70) 49.9%, rgb(113, 113, 122) 81.7%, rgb(212, 212, 216) 99.88%, rgb(250, 250, 250) 113.5%)",
+      "linear-gradient(135deg, oklch(0.22 0.01 260) 0%, oklch(0.32 0.02 260) 55%, oklch(0.48 0.02 260) 100%)",
     accent: {
-      dash: "bg-orange-600",
-      fill: "fill-orange-600",
-      text: "text-orange-400",
-      bg: "bg-orange-600/20",
+      dash: "bg-slate-500",
+      fill: "fill-slate-500",
+      text: "text-slate-300",
+      bg: "bg-slate-500/20",
     },
-    images: {
-      mobile1: "/images/projects/runeai-mobile-1.png",
-      mobile2: "/images/projects/runeai-mobile-2.png",
-      main: "/images/projects/runeai-main.png",
-    },
+    images: { mobile1: "", mobile2: "", main: "" },
     mainImageFit: "fill",
+    desktopLabel: "Chat · 500K ctx",
+    mobileLabel1: "Ask",
+    mobileLabel2: "Tools",
   },
   {
     id: "old-portfolio",
@@ -220,26 +208,18 @@ export const projects: Project[] = [
       "Physics-based interactions and advanced state management",
       "Robust full-stack architecture with Prisma and Node.js",
     ],
-    tech: [
-      tech.react,
-      tech.typescript,
-      tech.nextjs,
-      tech.nodejs,
-      tech.tailwind,
-      tech.gsap,
-    ],
+    tech: [tech.react, tech.typescript, tech.nextjs, tech.nodejs, tech.tailwind, tech.gsap],
     gradient:
-      "linear-gradient(10deg, rgb(153, 27, 27) 49.9%, rgb(153, 27, 27) 81.7%, rgb(239, 68, 68) 99.88%, rgb(249, 215, 147) 113.5%)",
+      "linear-gradient(135deg, oklch(0.32 0.14 40) 0%, oklch(0.44 0.18 45) 55%, oklch(0.60 0.18 55) 100%)",
     accent: {
-      dash: "bg-red-600",
-      fill: "fill-red-600",
-      text: "text-red-400",
-      bg: "bg-red-600/20",
+      dash: "bg-orange-500",
+      fill: "fill-orange-500",
+      text: "text-orange-300",
+      bg: "bg-orange-500/20",
     },
-    images: {
-      mobile1: "/images/projects/portfolio-mobile-1.png",
-      mobile2: "/images/projects/portfolio-mobile-2.png",
-      main: "/images/projects/portfolio-main.png",
-    },
+    images: { mobile1: "", mobile2: "", main: "" },
+    desktopLabel: "Case · portfolio",
+    mobileLabel1: "Home",
+    mobileLabel2: "Case",
   },
 ];

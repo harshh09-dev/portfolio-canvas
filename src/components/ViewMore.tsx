@@ -1,5 +1,10 @@
 import { ArrowRight } from "lucide-react";
 
+/**
+ * Editorial "view more" link — text + arrow with hairline underline.
+ * This is the shared preview-section affordance. Not a pill, not a button —
+ * an inline reading cue.
+ */
 export default function ViewMore({
   href,
   label = "View more",
@@ -8,16 +13,10 @@ export default function ViewMore({
   label?: string;
 }) {
   return (
-    <div className="mt-10 flex justify-center">
-      <a
-        href={href}
-        className="group inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/40 px-5 py-2.5 text-sm text-fg backdrop-blur-md transition-colors hover:border-border-strong hover:bg-muted"
-      >
-        {label}
-        <ArrowRight
-          size={14}
-          className="transition-transform group-hover:translate-x-1"
-        />
+    <div className="mt-10 md:mt-12 flex justify-center">
+      <a href={href} className="btn-editorial group">
+        <span>{label}</span>
+        <ArrowRight size={14} className="btn-editorial-arrow" />
       </a>
     </div>
   );

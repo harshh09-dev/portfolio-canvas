@@ -9,14 +9,16 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, projectIndex }: ProjectCardProps) {
+  const isFeatured = projectIndex === 0;
   return (
     <div
       className="project-card w-full"
       data-project-id={project.id}
       data-project-index={projectIndex}
+      style={isFeatured ? { marginBottom: 'clamp(2rem, 5vw, 4rem)' } : undefined}
     >
       <div
-        className="flex flex-col w-full lg:max-w-[865px]"
+        className={`flex flex-col w-full ${isFeatured ? 'lg:max-w-none' : 'lg:max-w-[865px]'}`}
         style={{ margin: 0, border: 0 }}
       >
         <a
@@ -24,22 +26,27 @@ export function ProjectCard({ project, projectIndex }: ProjectCardProps) {
           target="_blank"
           rel="noopener noreferrer"
           draggable={false}
-          className="project-frame group relative block w-full lg:max-w-[865px] lg:h-auto lg:min-h-[350px]"
+          className={`project-frame group relative block w-full ${
+            isFeatured ? 'lg:min-h-[440px]' : 'lg:max-w-[865px] lg:h-auto lg:min-h-[350px]'
+          }`}
           style={{ background: "transparent" }}
         >
           <div className="relative w-full h-full">
-            {/* Tablet / desktop layout: 2 phones + laptop */}
             <div className="hidden sm:grid sm:grid-cols-[minmax(160px,28%)_minmax(0,1fr)] lg:grid-cols-[minmax(200px,262px)_minmax(400px,1fr)] gap-3 sm:gap-4 lg:gap-5 h-full justify-center w-full">
               <div className="flex flex-col gap-4 lg:gap-[30px]">
                 <PhoneMockup
                   src={project.images.mobile1}
                   alt={`${project.title} Mobile View 1`}
                   gradient={project.gradient}
+                  title={project.title}
+                  subtitle={project.mobileLabel1}
                 />
                 <PhoneMockup
                   src={project.images.mobile2}
                   alt={`${project.title} Mobile View 2`}
                   gradient={project.gradient}
+                  title={project.title}
+                  subtitle={project.mobileLabel2}
                 />
               </div>
               <div className="h-full">
@@ -48,22 +55,25 @@ export function ProjectCard({ project, projectIndex }: ProjectCardProps) {
                   alt={project.title}
                   gradient={project.gradient}
                   fit={project.mainImageFit}
+                  title={project.title}
+                  subtitle={project.desktopLabel}
                 />
               </div>
             </div>
-            {/* Mobile layout: laptop only */}
             <div className="sm:hidden aspect-[16/10]">
               <LaptopMockup
                 src={project.images.main}
                 alt={project.title}
                 gradient={project.gradient}
                 fit={project.mainImageFit}
+                title={project.title}
+                subtitle={project.desktopLabel}
               />
             </div>
           </div>
         </a>
 
-        {/* Mobile info panel (hidden on lg where sticky panel takes over) */}
+        {/* Mobile info panel */}
         <div className="mobile-project-info mt-4 sm:mt-5 p-4 sm:p-5 bg-card rounded-xl sm:rounded-2xl border border-border lg:hidden">
           <div className="flex items-center mb-2 sm:mb-3">
             <div

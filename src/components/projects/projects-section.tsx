@@ -106,16 +106,18 @@ export function ProjectsSection() {
   const activeProject = projects[activeIndex];
 
   return (
-    <div className="bg-background">
+    <div className="bg-background" style={{ isolation: "isolate" }}>
       <section
         ref={sectionRef}
         id="projects-section"
-        className="w-full min-h-screen flex flex-col justify-start items-center z-20 font-outfit px-4 sm:px-6 lg:px-4 py-12 sm:py-16 lg:pt-16 pb-24 sm:pb-32 lg:pb-[200px]"
+        className="w-full min-h-screen flex flex-col justify-start items-center font-outfit px-4 sm:px-6 lg:px-4 py-12 sm:py-16 lg:pt-16 pb-24 sm:pb-32 lg:pb-[200px]"
         style={{
           margin: 0,
           border: 0,
           position: "relative",
           overflow: "hidden",
+          zIndex: 0,
+          isolation: "isolate",
         }}
       >
         {/* Heading */}

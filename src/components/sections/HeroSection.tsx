@@ -111,22 +111,25 @@ export default function HeroSection() {
             {site.displayName}
           </h1>
 
-          <SplitReveal
-            as="p"
-            className="text-serif-italic gradient-text mt-1 md:mt-3"
-            delay={0.5}
-            duration={1}
-            stagger={0.05}
-            split="words"
-          >
-            {site.tagline}
-          </SplitReveal>
+          {/* Subtitle — Hero is the one place gradient italic stays. */}
+          <div className="relative mt-2 md:mt-4" style={{ fontSize: "clamp(1.5rem, 3.2vw, 2.5rem)" }}>
+            <SplitReveal
+              as="p"
+              className="text-serif-italic gradient-text relative z-10"
+              delay={0.5}
+              duration={1}
+              stagger={0.05}
+              split="words"
+            >
+              {site.tagline}
+            </SplitReveal>
+          </div>
 
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.85 }}
-            className="mt-8 md:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
+            className="mt-7 md:mt-9 flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
           >
             <Magnetic>
               <a
@@ -150,21 +153,22 @@ export default function HeroSection() {
             </Magnetic>
           </motion.div>
 
-          {/* Meta strip */}
+          {/* Meta strip — pulled up close to CTAs, shared hairline baseline */}
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1 }}
-            className="mt-10 md:mt-12 grid grid-cols-2 items-center gap-8 md:gap-16 w-full max-w-lg"
+            className="mt-6 md:mt-7 flex items-stretch gap-6 md:gap-10 w-full max-w-md pt-4 border-t border-border/50"
           >
-            <div className="flex flex-col gap-1 text-left">
+            <div className="flex-1 flex flex-col gap-0.5 text-left">
               <span className="inline-flex items-center gap-1.5 text-eyebrow">
                 <MapPin size={12} style={{ color: "var(--accent-pink)" }} />
                 Based in
               </span>
               <span className="text-sm md:text-base font-medium text-fg">{site.location}</span>
             </div>
-            <div className="flex flex-col gap-1 text-right">
+            <div className="w-px bg-border/50" />
+            <div className="flex-1 flex flex-col gap-0.5 text-right">
               <span className="inline-flex items-center gap-1.5 justify-end text-eyebrow">
                 <Layers size={12} style={{ color: "var(--accent-blue)" }} />
                 Role

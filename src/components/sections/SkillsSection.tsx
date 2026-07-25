@@ -15,8 +15,7 @@ export default function SkillsSection() {
             <p className="text-eyebrow">The Toolkit</p>
           </Reveal>
           <SplitReveal as="h2" className="section-heading" split="words">
-            The magic{" "}
-            <span className="work-text">behind.</span>
+            The magic behind.
           </SplitReveal>
           <Reveal delay={0.2}>
             <p className="text-lead max-w-xl mx-auto">
