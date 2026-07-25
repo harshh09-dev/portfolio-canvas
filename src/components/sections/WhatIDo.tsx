@@ -173,7 +173,7 @@ function ServiceRow({ s, index }: { s: Service; index: number }) {
           >
             {s.title}
           </h3>
-          <p className="text-serif-italic gradient-text mb-5" style={{ fontSize: "1.25rem" }}>
+          <p className="accent-quiet mb-5" style={{ fontSize: "1.25rem" }}>
             {s.tagline}
           </p>
           <p className="text-lead mb-6 max-w-md">{s.description}</p>
@@ -226,8 +226,7 @@ export default function WhatIDo() {
             <p className="text-eyebrow">What I do</p>
           </Reveal>
           <SplitReveal as="h2" className="section-heading" split="words">
-            Designed for the{" "}
-            <span className="work-text">screen it lives on.</span>
+            Designed for the screen it lives on.
           </SplitReveal>
           <Reveal delay={0.2}>
             <p className="text-lead max-w-xl mx-auto">
