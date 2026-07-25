@@ -1,8 +1,6 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 import Reveal from "@/components/motion/Reveal";
 import SplitReveal from "@/components/motion/SplitReveal";
-import Magnetic from "@/components/motion/Magnetic";
 import { offTheClock, creativeTeaser } from "@/data/creative";
 
 export default function CreativeSide() {
@@ -103,3 +101,7 @@ export default function CreativeSide() {
 
         {/* NOTE: the single CTA lives in index.tsx via <ViewMore>,
             so this section no longer emits its own. */}
+      </div>
+    </section>
+  );
+}
