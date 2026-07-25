@@ -550,3 +550,69 @@
   -webkit-text-fill-color: transparent;
   font-variation-settings: "SOFT" 100;
 }
+
+/* ============================================================
+   ART DIRECTION PASS — utilities added Jul 2026
+   Editorial button variant, quiet accent, section bg rhythm,
+   un-carded stats, softer active nav pill.
+   ============================================================ */
+
+@utility btn-editorial {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--fg);
+  padding-block: 0.35rem;
+  border-bottom: 1px solid color-mix(in oklch, var(--fg) 22%, transparent);
+  transition: border-color var(--dur-fast) ease, gap var(--dur-fast) ease;
+}
+@utility btn-editorial-hover {
+  border-bottom-color: var(--fg);
+  gap: 0.75rem;
+}
+
+.btn-editorial:hover { border-bottom-color: var(--fg); }
+.btn-editorial:hover .btn-editorial-arrow { transform: translateX(3px); }
+.btn-editorial-arrow { transition: transform var(--dur-base) var(--ease-signature); }
+
+/* Quiet serif italic — accent without the gradient */
+.accent-quiet {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  font-variation-settings: "SOFT" 100;
+}
+
+/* Section background rhythm — no two consecutive sections share a treatment */
+@utility section-bg-cream {
+  background: color-mix(in oklch, var(--accent-yellow) 4.5%, var(--bg));
+}
+@utility section-bg-quiet {
+  background: var(--bg);
+}
+@utility section-bg-warm {
+  background: color-mix(in oklch, var(--accent-pink) 3.5%, var(--bg));
+}
+@utility section-bg-warm-rich {
+  background: color-mix(in oklch, var(--accent-pink) 6%, var(--bg-elevated));
+}
+
+/* Un-carded stat block */
+@utility stat-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-block: 0.25rem;
+}
+
+/* Nav active — soft, not solid black */
+@utility nav-active {
+  color: var(--fg);
+  background: color-mix(in oklch, var(--fg) 8%, transparent);
+}
