@@ -9,16 +9,47 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UsesRouteImport } from './routes/uses'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SignatureBookRouteImport } from './routes/signature-book'
 import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as OffTheClockRouteImport } from './routes/off-the-clock'
 import { Route as GuestbookRouteImport } from './routes/guestbook'
 import { Route as CreativeRouteImport } from './routes/creative'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const UsesRoute = UsesRouteImport.update({
+  id: '/uses',
+  path: '/uses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignatureBookRoute = SignatureBookRouteImport.update({
+  id: '/signature-book',
+  path: '/signature-book',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OffTheClockRoute = OffTheClockRouteImport.update({
+  id: '/off-the-clock',
+  path: '/off-the-clock',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuestbookRoute = GuestbookRouteImport.update({
@@ -29,6 +60,11 @@ const GuestbookRoute = GuestbookRouteImport.update({
 const CreativeRoute = CreativeRouteImport.update({
   id: '/creative',
   path: '/creative',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -51,26 +87,44 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/creative': typeof CreativeRoute
   '/guestbook': typeof GuestbookRoute
+  '/off-the-clock': typeof OffTheClockRoute
+  '/privacy': typeof PrivacyRoute
   '/projects': typeof ProjectsRoute
+  '/signature-book': typeof SignatureBookRoute
+  '/terms': typeof TermsRoute
+  '/uses': typeof UsesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/creative': typeof CreativeRoute
   '/guestbook': typeof GuestbookRoute
+  '/off-the-clock': typeof OffTheClockRoute
+  '/privacy': typeof PrivacyRoute
   '/projects': typeof ProjectsRoute
+  '/signature-book': typeof SignatureBookRoute
+  '/terms': typeof TermsRoute
+  '/uses': typeof UsesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/creative': typeof CreativeRoute
   '/guestbook': typeof GuestbookRoute
+  '/off-the-clock': typeof OffTheClockRoute
+  '/privacy': typeof PrivacyRoute
   '/projects': typeof ProjectsRoute
+  '/signature-book': typeof SignatureBookRoute
+  '/terms': typeof TermsRoute
+  '/uses': typeof UsesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -78,37 +132,102 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/cookies'
     | '/creative'
     | '/guestbook'
+    | '/off-the-clock'
+    | '/privacy'
     | '/projects'
+    | '/signature-book'
+    | '/terms'
+    | '/uses'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/creative' | '/guestbook' | '/projects'
+  to:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/cookies'
+    | '/creative'
+    | '/guestbook'
+    | '/off-the-clock'
+    | '/privacy'
+    | '/projects'
+    | '/signature-book'
+    | '/terms'
+    | '/uses'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/contact'
+    | '/cookies'
     | '/creative'
     | '/guestbook'
+    | '/off-the-clock'
+    | '/privacy'
     | '/projects'
+    | '/signature-book'
+    | '/terms'
+    | '/uses'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  CookiesRoute: typeof CookiesRoute
   CreativeRoute: typeof CreativeRoute
   GuestbookRoute: typeof GuestbookRoute
+  OffTheClockRoute: typeof OffTheClockRoute
+  PrivacyRoute: typeof PrivacyRoute
   ProjectsRoute: typeof ProjectsRoute
+  SignatureBookRoute: typeof SignatureBookRoute
+  TermsRoute: typeof TermsRoute
+  UsesRoute: typeof UsesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/uses': {
+      id: '/uses'
+      path: '/uses'
+      fullPath: '/uses'
+      preLoaderRoute: typeof UsesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signature-book': {
+      id: '/signature-book'
+      path: '/signature-book'
+      fullPath: '/signature-book'
+      preLoaderRoute: typeof SignatureBookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projects': {
       id: '/projects'
       path: '/projects'
       fullPath: '/projects'
       preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/off-the-clock': {
+      id: '/off-the-clock'
+      path: '/off-the-clock'
+      fullPath: '/off-the-clock'
+      preLoaderRoute: typeof OffTheClockRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guestbook': {
@@ -123,6 +242,13 @@ declare module '@tanstack/react-router' {
       path: '/creative'
       fullPath: '/creative'
       preLoaderRoute: typeof CreativeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -153,9 +279,15 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  CookiesRoute: CookiesRoute,
   CreativeRoute: CreativeRoute,
   GuestbookRoute: GuestbookRoute,
+  OffTheClockRoute: OffTheClockRoute,
+  PrivacyRoute: PrivacyRoute,
   ProjectsRoute: ProjectsRoute,
+  SignatureBookRoute: SignatureBookRoute,
+  TermsRoute: TermsRoute,
+  UsesRoute: UsesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

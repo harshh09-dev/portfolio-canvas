@@ -76,7 +76,7 @@ function Home() {
       <div className="section-bg-warm-rich">
         <section id="off-the-clock" style={{ paddingTop: "clamp(3rem, 6vw, 5rem)" }}>
           <CreativeSide />
-          <ViewMore href="/creative" label="Enter the studio" />
+          <ViewMore href="/off-the-clock" label="Enter the studio" />
         </section>
       </div>
 

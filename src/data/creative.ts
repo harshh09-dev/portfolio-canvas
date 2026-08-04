@@ -24,13 +24,19 @@ export const offTheClock: CreativePreview[] = [
     meta: "Lab",
     image: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=1600&q=80",
   },
+  {
+    title: "Music",
+    subtitle: "On repeat",
+    meta: "Playlists",
+    image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1600&q=80",
+  },
 ];
 
 export const creativeTeaser = {
   eyebrow: "Off the clock",
-  headline: "Off the",
-  headlineItalic: "clock.",
-  copy: "Not everything I make lives in a terminal. Photographs, writing, small design experiments — the quiet work between shipping.",
-  ctaLabel: "Enter the studio",
-  ctaHref: "/creative",
+  headlineLine1: "Where creativity",
+  headlineLine2: "breathes freely.",
+  copy: "A space for the unfiltered, the raw, the real. Thoughts, art, music, anime and everything in between.",
+  ctaLabel: "Explore My World",
+  ctaHref: "/off-the-clock",
 };

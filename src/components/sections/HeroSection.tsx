@@ -43,7 +43,7 @@ export default function HeroSection() {
     const tick = () => {
       cx += (tx - cx) * 0.08;
       cy += (ty - cy) * 0.08;
-      g.style.transform = `translate3d(${cx - 320}px, ${cy - 320}px, 0)`;
+      g.style.transform = `translate3d(${cx - 210}px, ${cy - 210}px, 0)`;
       raf = requestAnimationFrame(tick);
     };
     el.addEventListener("mousemove", onMove);
@@ -64,31 +64,16 @@ export default function HeroSection() {
         paddingBottom: "max(3rem, 6vh)",
       }}
     >
-      {/* Ambient soft-gradient wash */}
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none opacity-70"
-        style={{
-          background:
-            "radial-gradient(900px 500px at 20% 110%, color-mix(in oklch, var(--accent-pink) 12%, transparent), transparent 60%), radial-gradient(700px 500px at 90% -10%, color-mix(in oklch, var(--accent-blue) 10%, transparent), transparent 60%), radial-gradient(600px 400px at 50% 60%, color-mix(in oklch, var(--accent-yellow) 8%, transparent), transparent 65%)",
-        }}
-      />
+      {/* Small neutral vignette — sized to the hero centerpiece, not the viewport */}
       <div
         ref={glow}
         aria-hidden
-        className="absolute h-[640px] w-[640px] rounded-full pointer-events-none opacity-0 lg:opacity-50"
-        style={{
-          background: "var(--gradient-signature-soft)",
-          filter: "blur(120px)",
-          willChange: "transform",
-        }}
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none"
+        className="absolute h-[420px] w-[420px] rounded-full pointer-events-none opacity-0 lg:opacity-30"
         style={{
           background:
-            "radial-gradient(circle at 50% 55%, transparent 35%, var(--bg) 100%)",
+            "radial-gradient(closest-side, color-mix(in oklch, var(--fg) 10%, transparent), transparent 70%)",
+          filter: "blur(70px)",
+          willChange: "transform",
         }}
       />
 
@@ -111,11 +96,11 @@ export default function HeroSection() {
             {site.displayName}
           </h1>
 
-          {/* Subtitle — Hero is the one place gradient italic stays. */}
+          {/* Subtitle — monochrome serif italic. */}
           <div className="relative mt-2 md:mt-4" style={{ fontSize: "clamp(1.5rem, 3.2vw, 2.5rem)" }}>
             <SplitReveal
               as="p"
-              className="text-serif-italic gradient-text relative z-10"
+              className="text-serif-italic text-fg relative z-10"
               delay={0.5}
               duration={1}
               stagger={0.05}
@@ -162,7 +147,7 @@ export default function HeroSection() {
           >
             <div className="flex-1 flex flex-col gap-0.5 text-left">
               <span className="inline-flex items-center gap-1.5 text-eyebrow">
-                <MapPin size={12} style={{ color: "var(--accent-pink)" }} />
+                <MapPin size={12} />
                 Based in
               </span>
               <span className="text-sm md:text-base font-medium text-fg">{site.location}</span>
@@ -170,7 +155,7 @@ export default function HeroSection() {
             <div className="w-px bg-border/50" />
             <div className="flex-1 flex flex-col gap-0.5 text-right">
               <span className="inline-flex items-center gap-1.5 justify-end text-eyebrow">
-                <Layers size={12} style={{ color: "var(--accent-blue)" }} />
+                <Layers size={12} />
                 Role
               </span>
               <span className="text-sm md:text-base font-medium text-fg">{site.role}</span>
