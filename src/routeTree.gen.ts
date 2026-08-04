@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as OffTheClockRouteImport } from './routes/off-the-clock'
 import { Route as GuestbookRouteImport } from './routes/guestbook'
+import { Route as CreativeRouteImport } from './routes/creative'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -29,6 +30,11 @@ const OffTheClockRoute = OffTheClockRouteImport.update({
 const GuestbookRoute = GuestbookRouteImport.update({
   id: '/guestbook',
   path: '/guestbook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreativeRoute = CreativeRouteImport.update({
+  id: '/creative',
+  path: '/creative',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -51,6 +57,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/creative': typeof CreativeRoute
   '/guestbook': typeof GuestbookRoute
   '/off-the-clock': typeof OffTheClockRoute
   '/projects': typeof ProjectsRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/creative': typeof CreativeRoute
   '/guestbook': typeof GuestbookRoute
   '/off-the-clock': typeof OffTheClockRoute
   '/projects': typeof ProjectsRoute
@@ -68,6 +76,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/creative': typeof CreativeRoute
   '/guestbook': typeof GuestbookRoute
   '/off-the-clock': typeof OffTheClockRoute
   '/projects': typeof ProjectsRoute
@@ -78,6 +87,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/creative'
     | '/guestbook'
     | '/off-the-clock'
     | '/projects'
@@ -86,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/creative'
     | '/guestbook'
     | '/off-the-clock'
     | '/projects'
@@ -94,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/creative'
     | '/guestbook'
     | '/off-the-clock'
     | '/projects'
@@ -103,6 +115,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  CreativeRoute: typeof CreativeRoute
   GuestbookRoute: typeof GuestbookRoute
   OffTheClockRoute: typeof OffTheClockRoute
   ProjectsRoute: typeof ProjectsRoute
@@ -129,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/guestbook'
       fullPath: '/guestbook'
       preLoaderRoute: typeof GuestbookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/creative': {
+      id: '/creative'
+      path: '/creative'
+      fullPath: '/creative'
+      preLoaderRoute: typeof CreativeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -159,6 +179,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  CreativeRoute: CreativeRoute,
   GuestbookRoute: GuestbookRoute,
   OffTheClockRoute: OffTheClockRoute,
   ProjectsRoute: ProjectsRoute,
