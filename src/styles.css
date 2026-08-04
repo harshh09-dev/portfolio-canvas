@@ -54,8 +54,8 @@
   --secondary-foreground: 0 0% 98%;
   --muted: 0 0% 14%;
   --muted-foreground: 0 0% 70%;
-  --accent: 40 60% 82%;
-  --accent-foreground: 0 0% 8%;
+  --accent: 0 0% 14%;
+  --accent-foreground: 0 0% 98%;
   --destructive-foreground: 0 0% 100%;
   --input: 0 0% 18%;
 }
@@ -85,8 +85,8 @@
   --secondary-foreground: 0 0% 12%;
   --muted: 0 0% 95%;
   --muted-foreground: 0 0% 40%;
-  --accent: 40 60% 55%;
-  --accent-foreground: 0 0% 99%;
+  --accent: 0 0% 95%;
+  --accent-foreground: 0 0% 8%;
   --input: 0 0% 90%;
 }
 
@@ -104,7 +104,7 @@
   --shadow-sm: 0 4px 12px -6px oklch(0 0 0 / 0.45);
   --shadow-md: 0 12px 32px -14px oklch(0 0 0 / 0.55), 0 2px 6px oklch(0 0 0 / 0.25);
   --shadow-lg: 0 30px 80px -24px oklch(0 0 0 / 0.65), 0 6px 18px oklch(0 0 0 / 0.35);
-  --shadow-glow: 0 0 90px -20px color-mix(in oklch, var(--accent-pink) 55%, transparent);
+  --shadow-glow: 0 0 90px -20px color-mix(in oklch, var(--fg) 18%, transparent);
   --shadow-elegant: 0 24px 60px -30px oklch(0 0 0 / 0.55), 0 0 0 1px color-mix(in oklch, var(--border) 60%, transparent);
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -223,7 +223,7 @@
   }
 
   ::selection {
-    background: color-mix(in oklch, var(--accent-pink) 40%, transparent);
+    background: color-mix(in oklch, var(--fg) 30%, transparent);
     color: var(--fg);
   }
 
@@ -311,15 +311,11 @@
 }
 
 @utility gradient-text {
-  background: var(--gradient-signature);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  color: var(--fg);
 }
 
 @utility gradient-bg {
-  background: var(--gradient-signature);
+  background: var(--fg);
 }
 
 /* ============================================================
@@ -439,7 +435,7 @@
 
   &:hover {
     transform: translateY(-1px);
-    box-shadow: 0 12px 30px -10px color-mix(in oklch, var(--accent-pink) 40%, transparent);
+    box-shadow: 0 12px 30px -10px oklch(0 0 0 / 0.35);
   }
 }
 
@@ -479,11 +475,7 @@
 }
 
 @utility text-gradient {
-  background: var(--gradient-signature);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  color: var(--fg);
 }
 
 @utility eyebrow {
@@ -500,7 +492,7 @@
 }
 
 @utility text-brand-2 {
-  color: var(--accent-pink);
+  color: var(--fg);
 }
 
 @utility reveal-hidden {
@@ -535,11 +527,7 @@
   font-style: italic;
   font-weight: 300;
   letter-spacing: -0.02em;
-  background: var(--gradient-signature);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  color: var(--fg);
   font-variation-settings: "SOFT" 100;
 }
 
@@ -582,16 +570,16 @@
 
 /* Section background rhythm — no two consecutive sections share a treatment */
 @utility section-bg-cream {
-  background: color-mix(in oklch, var(--accent-yellow) 4.5%, var(--bg));
+  background: var(--bg);
 }
 @utility section-bg-quiet {
   background: var(--bg);
 }
 @utility section-bg-warm {
-  background: color-mix(in oklch, var(--accent-pink) 3.5%, var(--bg));
+  background: var(--bg-elevated);
 }
 @utility section-bg-warm-rich {
-  background: color-mix(in oklch, var(--accent-pink) 6%, var(--bg-elevated));
+  background: var(--bg-inset);
 }
 
 /* Un-carded stat block */
@@ -607,4 +595,10 @@
 @utility nav-active {
   color: var(--fg);
   background: color-mix(in oklch, var(--fg) 8%, transparent);
+}
+
+
+/* Monochrome photography — decorative imagery must not reintroduce color */
+@utility photo-mono {
+  filter: grayscale(1) contrast(1.02);
 }
