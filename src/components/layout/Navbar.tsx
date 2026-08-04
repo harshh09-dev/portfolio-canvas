@@ -12,9 +12,11 @@ import { nav, site, socials } from "@/data/site";
 export default function Navbar() {
   const location = useLocation();
   const [moreOpen, setMoreOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isDark, setIsDark] = useState(true);
   const [mounted, setMounted] = useState(false);
+
 
   useEffect(() => {
     setMounted(true);
