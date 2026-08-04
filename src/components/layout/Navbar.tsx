@@ -48,6 +48,20 @@ export default function Navbar() {
     } catch {}
   };
 
+  // Close the mobile sheet on navigation and lock scroll while it's open.
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
+  const mobileLinks = [...nav.primary, ...nav.more];
+
   return (
     <>
       {/* Mobile */}
@@ -59,25 +73,94 @@ export default function Navbar() {
             </div>
             <span className="text-sm font-medium">{site.name}</span>
           </a>
-          <button
-            onClick={toggleTheme}
-            type="button"
-            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-            className="flex h-9 w-9 items-center justify-center rounded-full hover:bg-muted transition-colors"
-          >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.span
-                key={mounted && isDark ? "moon" : "sun"}
-                initial={{ rotate: -45, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 45, opacity: 0 }}
-                transition={{ duration: 0.25 }}
-              >
-                {mounted && isDark ? <Moon size={15} /> : <Sun size={15} />}
-              </motion.span>
-            </AnimatePresence>
-          </button>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={toggleTheme}
+              type="button"
+              aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+              className="flex h-9 w-9 items-center justify-center rounded-full hover:bg-muted transition-colors"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={mounted && isDark ? "moon" : "sun"}
+                  initial={{ rotate: -45, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 45, opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  {mounted && isDark ? <Moon size={15} /> : <Sun size={15} />}
+                </motion.span>
+              </AnimatePresence>
+            </button>
+            <button
+              onClick={() => setMobileOpen((v) => !v)}
+              type="button"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              className="flex h-9 w-9 items-center justify-center rounded-full hover:bg-muted transition-colors"
+            >
+              {mobileOpen ? <X size={17} /> : <Menu size={17} />}
+            </button>
+          </div>
         </div>
+
+        {/* Full-screen mobile sheet */}
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="fixed inset-0 -z-10 flex flex-col bg-background px-6 pb-10 pt-24"
+            >
+              <nav className="flex flex-col divide-y divide-border border-y border-border">
+                {mobileLinks.map((item, i) => {
+                  const isActive = location.pathname === item.href;
+                  return (
+                    <motion.a
+                      key={item.name}
+                      href={item.href}
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.05 + i * 0.04, duration: 0.35 }}
+                      aria-current={isActive ? "page" : undefined}
+                      className={`py-4 text-2xl tracking-tight ${
+                        isActive ? "text-fg font-medium" : "text-fg-muted"
+                      }`}
+                    >
+                      {item.name}
+                    </motion.a>
+                  );
+                })}
+              </nav>
+
+              <div className="mt-auto pt-10">
+                <p className="text-eyebrow">Elsewhere</p>
+                <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+                  {socials.map((s) => (
+                    <a
+                      key={s.name}
+                      href={s.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-fg-muted hover:text-fg"
+                    >
+                      {s.name}
+                    </a>
+                  ))}
+                </div>
+                <a
+                  href={`mailto:${site.email}`}
+                  className="mt-6 flex min-h-11 items-center justify-center rounded-full bg-foreground px-6 text-sm text-background"
+                >
+                  Book a Call
+                </a>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
       </header>
 
       {/* Desktop */}
