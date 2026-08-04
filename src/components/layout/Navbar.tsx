@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "@tanstack/react-router";
-import { ChevronDown, Moon, Sun, Command } from "lucide-react";
-import { nav, site } from "@/data/site";
+import { ChevronDown, Moon, Sun, Command, Menu, X } from "lucide-react";
+import { nav, site, socials } from "@/data/site";
+
 
 /**
  * Sticky editorial navbar. Theme toggle correctly flips BOTH `.dark` and
