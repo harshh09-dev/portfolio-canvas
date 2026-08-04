@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UsesRouteImport } from './routes/uses'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SignatureBookRouteImport } from './routes/signature-book'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -23,6 +24,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const UsesRoute = UsesRouteImport.update({
   id: '/uses',
   path: '/uses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignatureBookRoute = SignatureBookRouteImport.update({
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/projects': typeof ProjectsRoute
   '/signature-book': typeof SignatureBookRoute
+  '/terms': typeof TermsRoute
   '/uses': typeof UsesRoute
 }
 export interface FileRoutesByTo {
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/projects': typeof ProjectsRoute
   '/signature-book': typeof SignatureBookRoute
+  '/terms': typeof TermsRoute
   '/uses': typeof UsesRoute
 }
 export interface FileRoutesById {
@@ -106,6 +114,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/projects': typeof ProjectsRoute
   '/signature-book': typeof SignatureBookRoute
+  '/terms': typeof TermsRoute
   '/uses': typeof UsesRoute
 }
 export interface FileRouteTypes {
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/projects'
     | '/signature-book'
+    | '/terms'
     | '/uses'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/projects'
     | '/signature-book'
+    | '/terms'
     | '/uses'
   id:
     | '__root__'
@@ -144,6 +155,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/projects'
     | '/signature-book'
+    | '/terms'
     | '/uses'
   fileRoutesById: FileRoutesById
 }
@@ -157,6 +169,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   ProjectsRoute: typeof ProjectsRoute
   SignatureBookRoute: typeof SignatureBookRoute
+  TermsRoute: typeof TermsRoute
   UsesRoute: typeof UsesRoute
 }
 
@@ -167,6 +180,13 @@ declare module '@tanstack/react-router' {
       path: '/uses'
       fullPath: '/uses'
       preLoaderRoute: typeof UsesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signature-book': {
@@ -245,6 +265,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   ProjectsRoute: ProjectsRoute,
   SignatureBookRoute: SignatureBookRoute,
+  TermsRoute: TermsRoute,
   UsesRoute: UsesRoute,
 }
 export const routeTree = rootRouteImport
