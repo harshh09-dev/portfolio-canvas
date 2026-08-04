@@ -24,30 +24,22 @@
   --border-strong: oklch(0.36 0 0);
   --ring: oklch(0.85 0 0);
 
-  /* Accent trio — luxurious, not vibrant */
-  --accent-pink: oklch(0.88 0.06 12);      /* soft pink */
-  --accent-yellow: oklch(0.90 0.08 90);    /* warm yellow */
-  --accent-blue: oklch(0.82 0.06 230);     /* soft blue */
-  --accent-signature: var(--accent-pink);  /* alias */
-  --accent-red: oklch(0.62 0.20 25);       /* skills marquee */
-  --accent-warm: var(--accent-yellow);
-  --accent-cool: var(--accent-blue);
-  --accent-mint: var(--accent-blue);
-  --destructive: oklch(0.60 0.22 25);
+  /* MONOCHROME RULE: no chromatic accents anywhere on the site.
+     These legacy aliases now all resolve to neutral foreground values so
+     any remaining consumer renders in greyscale in both themes. */
+  --accent-pink: var(--fg);
+  --accent-yellow: var(--fg);
+  --accent-blue: var(--fg);
+  --accent-signature: var(--fg);
+  --accent-red: var(--fg);
+  --accent-warm: var(--fg);
+  --accent-cool: var(--fg);
+  --accent-mint: var(--fg);
+  --destructive: oklch(0.55 0 0);
 
-  /* Signature gradient — soft pink → warm yellow → soft blue */
-  --gradient-signature: linear-gradient(
-    120deg,
-    oklch(0.88 0.06 12) 0%,
-    oklch(0.90 0.08 90) 48%,
-    oklch(0.82 0.06 230) 100%
-  );
-  --gradient-signature-soft: linear-gradient(
-    120deg,
-    color-mix(in oklch, oklch(0.88 0.06 12) 60%, transparent) 0%,
-    color-mix(in oklch, oklch(0.90 0.08 90) 60%, transparent) 48%,
-    color-mix(in oklch, oklch(0.82 0.06 230) 60%, transparent) 100%
-  );
+  --gradient-signature: none;
+  --gradient-signature-soft: none;
+
 
   /* Shadcn HSL bridge */
   --background: 0 0% 6.5%;
