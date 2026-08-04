@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UsesRouteImport } from './routes/uses'
 import { Route as SignatureBookRouteImport } from './routes/signature-book'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as OffTheClockRouteImport } from './routes/off-the-clock'
@@ -18,6 +19,11 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const UsesRoute = UsesRouteImport.update({
+  id: '/uses',
+  path: '/uses',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignatureBookRoute = SignatureBookRouteImport.update({
   id: '/signature-book',
   path: '/signature-book',
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/off-the-clock': typeof OffTheClockRoute
   '/projects': typeof ProjectsRoute
   '/signature-book': typeof SignatureBookRoute
+  '/uses': typeof UsesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/off-the-clock': typeof OffTheClockRoute
   '/projects': typeof ProjectsRoute
   '/signature-book': typeof SignatureBookRoute
+  '/uses': typeof UsesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/off-the-clock': typeof OffTheClockRoute
   '/projects': typeof ProjectsRoute
   '/signature-book': typeof SignatureBookRoute
+  '/uses': typeof UsesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/off-the-clock'
     | '/projects'
     | '/signature-book'
+    | '/uses'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/off-the-clock'
     | '/projects'
     | '/signature-book'
+    | '/uses'
   id:
     | '__root__'
     | '/'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '/off-the-clock'
     | '/projects'
     | '/signature-book'
+    | '/uses'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -132,10 +144,18 @@ export interface RootRouteChildren {
   OffTheClockRoute: typeof OffTheClockRoute
   ProjectsRoute: typeof ProjectsRoute
   SignatureBookRoute: typeof SignatureBookRoute
+  UsesRoute: typeof UsesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/uses': {
+      id: '/uses'
+      path: '/uses'
+      fullPath: '/uses'
+      preLoaderRoute: typeof UsesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/signature-book': {
       id: '/signature-book'
       path: '/signature-book'
@@ -204,6 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   OffTheClockRoute: OffTheClockRoute,
   ProjectsRoute: ProjectsRoute,
   SignatureBookRoute: SignatureBookRoute,
+  UsesRoute: UsesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
