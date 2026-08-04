@@ -6,7 +6,7 @@ import SplitReveal from "@/components/motion/SplitReveal";
 import { offTheClock } from "@/data/creative";
 import { site } from "@/data/site";
 
-export const Route = createFileRoute("/creative")({
+export const Route = createFileRoute("/off-the-clock")({
   head: () => ({
     meta: [
       { title: `Off The Clock — ${site.name}` },
