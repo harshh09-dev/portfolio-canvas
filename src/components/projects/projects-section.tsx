@@ -122,15 +122,6 @@ export function ProjectsSection() {
       >
         {/* Heading */}
         <div className="w-full text-center mb-10 md:mb-16 relative pt-4 pb-6 md:pb-10">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 md:w-[28rem] md:h-[28rem] opacity-[0.18] pointer-events-none">
-            <div
-              className="absolute inset-0 rounded-full blur-[80px]"
-              style={{
-                background:
-                  "radial-gradient(closest-side, color-mix(in oklch, var(--accent-signature) 55%, transparent), transparent 70%)",
-              }}
-            />
-          </div>
           <div className="relative flex flex-col items-center px-4 gap-3">
             <p className="text-eyebrow">Crafting modern experiences</p>
             <h2 className="section-heading">
@@ -170,10 +161,10 @@ export function ProjectsSection() {
                 {/* Progress rail */}
                 <div className="absolute -right-6 top-0 h-full w-8 z-10">
                   <div className="relative h-full w-full">
-                    <div className="absolute top-0 bottom-0 left-1/2 w-1.5 -translate-x-1/2 rounded-full bg-muted shadow-[inset_0_2px_1.5px_rgba(0,0,0,0.08)] dark:shadow-[inset_0_2px_1.5px_rgba(255,255,255,0.08)]">
+                    <div className="absolute top-0 bottom-0 left-1/2 w-1.5 -translate-x-1/2 rounded-full bg-muted">
                       <div
                         ref={progressFillRef}
-                        className="absolute inset-0 w-full origin-top rounded-full bg-gradient-to-t from-orange-600 from-[0%] via-yellow-500 via-[10%] to-transparent"
+                        className="absolute inset-0 w-full origin-top rounded-full bg-foreground"
                         style={{ opacity: 0, transform: "scaleY(0)" }}
                       />
                     </div>

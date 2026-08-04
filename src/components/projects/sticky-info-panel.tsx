@@ -53,7 +53,7 @@ export function StickyInfoPanel({ project }: StickyInfoPanelProps) {
         style={{ paddingRight: "20px" }}
       >
         <div
-          className={`my-4 mr-4 rounded-full flex-shrink-0 ${project.accent.dash}`}
+          className="my-4 mr-4 rounded-full flex-shrink-0 bg-foreground"
           style={{ width: "24px", height: "4px" }}
         />
         <div ref={contentRef} className="flex flex-col items-start w-full">
@@ -70,7 +70,7 @@ export function StickyInfoPanel({ project }: StickyInfoPanelProps) {
                 className="panel-feature flex items-start text-sm font-outfit"
               >
                 <SparkleIcon
-                  className={`mt-0.5 mr-2 size-4 lg:size-5 shrink-0 rounded-full lg:bg-white lg:dark:bg-black ${project.accent.fill} ${project.accent.text} ${project.accent.bg}`}
+                  className="mt-0.5 mr-2 size-4 lg:size-5 shrink-0 rounded-full fill-foreground text-foreground bg-foreground/10"
                 />
                 <span className="leading-tight">{feature}</span>
               </li>
