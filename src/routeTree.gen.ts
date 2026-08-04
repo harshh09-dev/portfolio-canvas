@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UsesRouteImport } from './routes/uses'
 import { Route as SignatureBookRouteImport } from './routes/signature-book'
 import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as OffTheClockRouteImport } from './routes/off-the-clock'
 import { Route as GuestbookRouteImport } from './routes/guestbook'
 import { Route as CreativeRouteImport } from './routes/creative'
@@ -32,6 +33,11 @@ const SignatureBookRoute = SignatureBookRouteImport.update({
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OffTheClockRoute = OffTheClockRouteImport.update({
@@ -72,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/creative': typeof CreativeRoute
   '/guestbook': typeof GuestbookRoute
   '/off-the-clock': typeof OffTheClockRoute
+  '/privacy': typeof PrivacyRoute
   '/projects': typeof ProjectsRoute
   '/signature-book': typeof SignatureBookRoute
   '/uses': typeof UsesRoute
@@ -83,6 +90,7 @@ export interface FileRoutesByTo {
   '/creative': typeof CreativeRoute
   '/guestbook': typeof GuestbookRoute
   '/off-the-clock': typeof OffTheClockRoute
+  '/privacy': typeof PrivacyRoute
   '/projects': typeof ProjectsRoute
   '/signature-book': typeof SignatureBookRoute
   '/uses': typeof UsesRoute
@@ -95,6 +103,7 @@ export interface FileRoutesById {
   '/creative': typeof CreativeRoute
   '/guestbook': typeof GuestbookRoute
   '/off-the-clock': typeof OffTheClockRoute
+  '/privacy': typeof PrivacyRoute
   '/projects': typeof ProjectsRoute
   '/signature-book': typeof SignatureBookRoute
   '/uses': typeof UsesRoute
@@ -108,6 +117,7 @@ export interface FileRouteTypes {
     | '/creative'
     | '/guestbook'
     | '/off-the-clock'
+    | '/privacy'
     | '/projects'
     | '/signature-book'
     | '/uses'
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | '/creative'
     | '/guestbook'
     | '/off-the-clock'
+    | '/privacy'
     | '/projects'
     | '/signature-book'
     | '/uses'
@@ -130,6 +141,7 @@ export interface FileRouteTypes {
     | '/creative'
     | '/guestbook'
     | '/off-the-clock'
+    | '/privacy'
     | '/projects'
     | '/signature-book'
     | '/uses'
@@ -142,6 +154,7 @@ export interface RootRouteChildren {
   CreativeRoute: typeof CreativeRoute
   GuestbookRoute: typeof GuestbookRoute
   OffTheClockRoute: typeof OffTheClockRoute
+  PrivacyRoute: typeof PrivacyRoute
   ProjectsRoute: typeof ProjectsRoute
   SignatureBookRoute: typeof SignatureBookRoute
   UsesRoute: typeof UsesRoute
@@ -168,6 +181,13 @@ declare module '@tanstack/react-router' {
       path: '/projects'
       fullPath: '/projects'
       preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/off-the-clock': {
@@ -222,6 +242,7 @@ const rootRouteChildren: RootRouteChildren = {
   CreativeRoute: CreativeRoute,
   GuestbookRoute: GuestbookRoute,
   OffTheClockRoute: OffTheClockRoute,
+  PrivacyRoute: PrivacyRoute,
   ProjectsRoute: ProjectsRoute,
   SignatureBookRoute: SignatureBookRoute,
   UsesRoute: UsesRoute,
