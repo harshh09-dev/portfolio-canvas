@@ -1,106 +1,89 @@
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import Reveal from "@/components/motion/Reveal";
 import SplitReveal from "@/components/motion/SplitReveal";
 import { offTheClock, creativeTeaser } from "@/data/creative";
+
+/**
+ * Off The Clock — homepage preview.
+ * Left: scattered grayscale polaroid collage. Right: editorial copy + CTA.
+ * Monochrome only; photography rendered greyscale so it can't reintroduce color.
+ */
+const collageTransforms = [
+  { rotate: -7, x: 0, y: 10 },
+  { rotate: 4, x: 26, y: 0 },
+  { rotate: -3, x: 52, y: 22 },
+  { rotate: 8, x: 78, y: 8 },
+];
 
 export default function CreativeSide() {
   return (
     <section className="section relative overflow-hidden">
       <div className="container-editorial">
-        <div className="section-header">
+        <div className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
+          {/* Collage */}
           <Reveal>
-            <p className="text-eyebrow">{creativeTeaser.eyebrow}</p>
+            <div className="relative mx-auto h-[300px] w-full max-w-[420px] sm:h-[360px]">
+              {offTheClock.slice(0, 4).map((c, i) => {
+                const t = collageTransforms[i];
+                return (
+                  <motion.figure
+                    key={c.title}
+                    whileHover={{ rotate: 0, y: t.y - 8, zIndex: 10 }}
+                    transition={{ duration: 0.5, ease: [0.7, 0, 0.3, 1] }}
+                    className="absolute overflow-hidden rounded-sm border border-border bg-card p-1.5"
+                    style={{
+                      left: `${t.x / 1.35}%`,
+                      top: `${t.y}%`,
+                      rotate: `${t.rotate}deg`,
+                      width: "clamp(120px, 42%, 180px)",
+                      zIndex: i,
+                    }}
+                  >
+                    <img
+                      src={c.image}
+                      alt={c.title}
+                      loading="lazy"
+                      className="photo-mono aspect-[4/5] w-full object-cover"
+                    />
+                  </motion.figure>
+                );
+              })}
+            </div>
           </Reveal>
-          <SplitReveal as="h2" className="section-heading" split="words">
-            {creativeTeaser.headline}{" "}
-            <span className="work-text">{creativeTeaser.headlineItalic}</span>
-          </SplitReveal>
-          <Reveal delay={0.2}>
-            <p className="text-lead max-w-xl mx-auto">{creativeTeaser.copy}</p>
-          </Reveal>
-        </div>
 
-        {/* Asymmetric editorial layout — Photography taller than Writing */}
-        <div className="grid grid-cols-12 gap-3 md:gap-5">
-          {/* Photography — visibly taller (cinematic) */}
-          <Reveal className="col-span-12 md:col-span-7">
-            <motion.a
-              href={creativeTeaser.ctaHref}
-              whileHover={{ y: -4 }}
-              transition={{ duration: 0.5, ease: [0.7, 0, 0.3, 1] }}
-              className="group block relative overflow-hidden rounded-2xl border border-border/60"
-              style={{ aspectRatio: "5 / 6" }}
+          {/* Copy */}
+          <div>
+            <Reveal>
+              <p className="text-eyebrow">{creativeTeaser.eyebrow}</p>
+            </Reveal>
+            <SplitReveal
+              as="h2"
+              className="section-heading mt-4 !text-left"
+              split="words"
             >
-              <motion.img
-                src={offTheClock[0].image}
-                alt={offTheClock[0].title}
-                className="absolute inset-0 w-full h-full object-cover"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 1.1, ease: [0.7, 0, 0.3, 1] }}
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-transparent" />
-              <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end">
-                <span className="text-eyebrow mb-2">{offTheClock[0].subtitle}</span>
-                <h3
-                  className="text-fg leading-none"
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontWeight: 300,
-                    fontSize: "clamp(2rem, 4vw, 3.5rem)",
-                    letterSpacing: "-0.02em",
-                    fontVariationSettings: '"SOFT" 100',
-                  }}
-                >
-                  {offTheClock[0].title}
-                </h3>
-              </div>
-            </motion.a>
-          </Reveal>
-
-          {/* Writing + Playgrounds stacked, shorter */}
-          <div className="col-span-12 md:col-span-5 flex flex-col gap-3 md:gap-5">
-            {offTheClock.slice(1).map((card, i) => (
-              <Reveal key={card.title} delay={0.1 + i * 0.1}>
-                <motion.a
-                  href={creativeTeaser.ctaHref}
-                  whileHover={{ y: -4 }}
-                  transition={{ duration: 0.5, ease: [0.7, 0, 0.3, 1] }}
-                  className="group block relative overflow-hidden rounded-2xl border border-border/60"
-                  style={{ aspectRatio: "16 / 9" }}
-                >
-                  <motion.img
-                    src={card.image}
-                    alt={card.title}
-                    className="absolute inset-0 w-full h-full object-cover"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 1.1, ease: [0.7, 0, 0.3, 1] }}
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-transparent" />
-                  <div className="absolute inset-0 p-5 md:p-6 flex flex-col justify-end">
-                    <span className="text-eyebrow mb-1.5">{card.subtitle}</span>
-                    <h3
-                      className="text-fg leading-none"
-                      style={{
-                        fontFamily: "var(--font-serif)",
-                        fontWeight: 300,
-                        fontSize: "clamp(1.5rem, 2.5vw, 2.25rem)",
-                        letterSpacing: "-0.02em",
-                        fontVariationSettings: '"SOFT" 100',
-                      }}
-                    >
-                      {card.title}
-                    </h3>
-                  </div>
-                </motion.a>
-              </Reveal>
-            ))}
+              {`${creativeTeaser.headlineLine1} ${creativeTeaser.headlineLine2}`}
+            </SplitReveal>
+            <Reveal delay={0.12}>
+              <div className="mt-6 h-px w-16 bg-foreground" />
+            </Reveal>
+            <Reveal delay={0.18}>
+              <p className="text-lead mt-6 max-w-md">{creativeTeaser.copy}</p>
+            </Reveal>
+            <Reveal delay={0.26}>
+              <a
+                href={creativeTeaser.ctaHref}
+                className="group mt-8 inline-flex min-h-11 items-center gap-2 rounded-full border border-border-strong px-6 py-3 text-sm font-medium text-fg transition-colors duration-300 hover:bg-foreground hover:text-background"
+              >
+                {creativeTeaser.ctaLabel}
+                <ArrowUpRight
+                  size={16}
+                  className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </a>
+            </Reveal>
           </div>
         </div>
-
-        {/* NOTE: the single CTA lives in index.tsx via <ViewMore>,
-            so this section no longer emits its own. */}
       </div>
     </section>
   );
