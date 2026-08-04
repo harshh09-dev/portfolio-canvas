@@ -1,100 +1,80 @@
 interface LaptopMockupProps {
   src: string;
   alt: string;
-  gradient: string;
-  fit?: 'cover' | 'fill';
+  fit?: "cover" | "fill";
   title?: string;
   subtitle?: string;
 }
 
 /**
- * Laptop mockup — renders an intentional branded screen fallback when
- * `src` is empty or the referenced image is missing.
+ * Laptop mockup — monochrome device chrome with a neutral placeholder
+ * screen when no screenshot is supplied.
  */
-export function LaptopMockup({ src, alt, gradient, fit = 'cover', title, subtitle }: LaptopMockupProps) {
+export function LaptopMockup({ src, alt, fit = "cover", title, subtitle }: LaptopMockupProps) {
   const hasImage = Boolean(src);
   return (
-    <div
-      className="laptop-frame relative rounded-xl sm:rounded-2xl overflow-hidden shadow-lg h-full"
-      style={{ background: gradient }}
-    >
-      <div className="p-3 sm:p-4 lg:p-5 h-full flex items-center justify-center">
-        <div className="relative w-full h-full flex flex-col items-center justify-center">
-          <div className="relative w-full aspect-[16/10] bg-[#1a1a1a] rounded-lg sm:rounded-xl shadow-2xl p-[1.5%] sm:p-[1.2%] ring-1 ring-white/10 group transform-gpu">
-            <div className="relative w-full h-full bg-black rounded-md sm:rounded-lg overflow-hidden ring-1 ring-white/5">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[14%] sm:w-[12%] h-[6%] sm:h-[7%] bg-black rounded-b-md sm:rounded-b-lg z-20 flex items-end justify-center pb-1 border-b border-x border-white/10 shadow-sm">
-                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#111] ring-1 ring-white/20 opacity-80 shadow-inner" />
-              </div>
-              <div className="relative w-full h-full" style={{ background: hasImage ? '#fff' : 'transparent' }}>
-                {hasImage ? (
-                  <img
-                    src={src}
-                    alt={alt}
-                    width={1200}
-                    height={750}
-                    loading="lazy"
-                    className={`w-full h-full ${fit === 'fill' ? 'object-fill' : 'object-cover'} object-top`}
-                  />
-                ) : (
-                  <BrandedLaptopScreen title={title} subtitle={subtitle} gradient={gradient} />
-                )}
-                <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-transparent pointer-events-none mix-blend-overlay z-10 opacity-50" />
-              </div>
+    <div className="laptop-frame relative flex h-full flex-col">
+      <div className="relative flex-1 overflow-hidden rounded-xl border border-border bg-card sm:rounded-2xl">
+        <div className="flex h-full items-center justify-center p-3 sm:p-4 lg:p-5">
+          <div className="relative aspect-[16/10] w-full rounded-lg border border-border-strong bg-muted p-[1.2%] sm:rounded-xl">
+            <div className="relative h-full w-full overflow-hidden rounded-md border border-border bg-muted sm:rounded-lg">
+              <div className="absolute left-1/2 top-0 z-20 h-[6%] w-[13%] -translate-x-1/2 rounded-b-md border-x border-b border-border bg-foreground/10" />
+              {hasImage ? (
+                <img
+                  src={src}
+                  alt={alt}
+                  width={1200}
+                  height={750}
+                  loading="lazy"
+                  className={`h-full w-full ${fit === "fill" ? "object-fill" : "object-cover"} object-top`}
+                />
+              ) : (
+                <PlaceholderLaptopScreen />
+              )}
             </div>
-            <div className="absolute bottom-[-2px] left-1/2 -translate-x-1/2 w-[20%] h-[3px] bg-[#333] rounded-b-lg opacity-80" />
           </div>
         </div>
       </div>
+      {(title || subtitle) && (
+        <p className="mt-2 text-center text-[0.7rem] uppercase tracking-[0.18em] text-muted-foreground">
+          {subtitle ?? title}
+        </p>
+      )}
     </div>
   );
 }
 
-function BrandedLaptopScreen({
-  title,
-  subtitle,
-  gradient,
-}: {
-  title?: string;
-  subtitle?: string;
-  gradient: string;
-}) {
+function PlaceholderLaptopScreen() {
   return (
-    <div className="relative w-full h-full flex flex-col" style={{ background: gradient }}>
-      {/* Fake browser chrome */}
-      <div className="h-6 flex items-center gap-1.5 px-3 bg-black/25 border-b border-white/10">
-        <div className="h-2 w-2 rounded-full bg-white/40" />
-        <div className="h-2 w-2 rounded-full bg-white/25" />
-        <div className="h-2 w-2 rounded-full bg-white/15" />
-        <div className="ml-3 h-2 w-40 rounded-full bg-white/15" />
+    <div className="relative flex h-full w-full flex-col bg-muted">
+      <div className="flex h-6 items-center gap-1.5 border-b border-border px-3">
+        <div className="h-2 w-2 rounded-full bg-foreground/30" />
+        <div className="h-2 w-2 rounded-full bg-foreground/20" />
+        <div className="h-2 w-2 rounded-full bg-foreground/15" />
+        <div className="ml-3 h-2 w-40 rounded-full bg-foreground/10" />
       </div>
-      <div className="flex-1 grid grid-cols-6 grid-rows-4 gap-2 p-4">
-        <div className="col-span-2 row-span-4 rounded-lg bg-white/10 border border-white/15 flex flex-col gap-2 p-3">
-          <div className="h-2 w-16 rounded-full bg-white/40" />
-          <div className="h-1.5 w-12 rounded-full bg-white/20" />
+      <div className="grid flex-1 grid-cols-6 grid-rows-4 gap-2 p-4">
+        <div className="col-span-2 row-span-4 flex flex-col gap-2 rounded-lg border border-border bg-foreground/[0.05] p-3">
+          <div className="h-2 w-16 rounded-full bg-foreground/25" />
+          <div className="h-1.5 w-12 rounded-full bg-foreground/15" />
           <div className="mt-2 flex flex-col gap-1.5">
-            <div className="h-1.5 w-full rounded-full bg-white/15" />
-            <div className="h-1.5 w-4/5 rounded-full bg-white/15" />
-            <div className="h-1.5 w-3/5 rounded-full bg-white/15" />
+            <div className="h-1.5 w-full rounded-full bg-foreground/10" />
+            <div className="h-1.5 w-4/5 rounded-full bg-foreground/10" />
+            <div className="h-1.5 w-3/5 rounded-full bg-foreground/10" />
           </div>
         </div>
-        <div className="col-span-4 row-span-1 rounded-lg bg-white/8 border border-white/10 flex items-center px-4">
-          <div className="text-white font-medium truncate" style={{ fontSize: '0.95rem', letterSpacing: '-0.01em' }}>
-            {title}
-          </div>
-          {subtitle && (
-            <div className="ml-3 text-white/70 truncate" style={{ fontSize: '0.7rem' }}>
-              {subtitle}
-            </div>
-          )}
+        <div className="col-span-4 row-span-1 flex items-center gap-3 rounded-lg border border-border bg-foreground/[0.04] px-4">
+          <div className="h-2 w-32 rounded-full bg-foreground/20" />
+          <div className="h-1.5 w-20 rounded-full bg-foreground/10" />
         </div>
-        <div className="col-span-2 row-span-3 rounded-lg bg-gradient-to-br from-white/15 to-white/5 border border-white/15" />
-        <div className="col-span-2 row-span-3 rounded-lg bg-white/8 border border-white/10 flex flex-col gap-1.5 p-3">
-          <div className="h-1.5 w-full rounded-full bg-white/25" />
-          <div className="h-1.5 w-5/6 rounded-full bg-white/20" />
-          <div className="h-1.5 w-4/6 rounded-full bg-white/15" />
+        <div className="col-span-2 row-span-3 rounded-lg border border-border bg-foreground/[0.06]" />
+        <div className="col-span-2 row-span-3 flex flex-col gap-1.5 rounded-lg border border-border bg-foreground/[0.04] p-3">
+          <div className="h-1.5 w-full rounded-full bg-foreground/20" />
+          <div className="h-1.5 w-5/6 rounded-full bg-foreground/15" />
+          <div className="h-1.5 w-4/6 rounded-full bg-foreground/10" />
           <div className="mt-auto grid grid-cols-3 gap-1">
             {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="h-5 rounded bg-white/10 border border-white/12" />
+              <div key={i} className="h-5 rounded border border-border bg-foreground/[0.06]" />
             ))}
           </div>
         </div>
