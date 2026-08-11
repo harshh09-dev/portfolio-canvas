@@ -123,7 +123,7 @@ export default function HeroSection() {
           <div className="lg:px-2 lg:text-center">
             <SplitReveal
               as="h2"
-              className="text-serif-italic text-fg"
+              className="text-serif-italic text-fg [font-size:clamp(1.4rem,2.6vw,2.25rem)]"
               delay={0.5}
               duration={1}
               stagger={0.04}
