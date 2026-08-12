@@ -108,7 +108,7 @@ export default function HeroSection() {
                 {hero.capabilities.map((c) => (
                   <li
                     key={c}
-                    className="mb-4 inline-flex items-center gap-2 text-[1.0625rem] font-medium text-[var(--ref-ink)]"
+                    className="mb-4 flex items-center gap-2 text-[1.0625rem] font-medium text-[var(--ref-ink)]"
                   >
                     <span
                       aria-hidden

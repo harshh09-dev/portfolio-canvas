@@ -664,8 +664,9 @@
 @utility ref-banner-title {
   font-family: var(--ref-font-heading);
   font-weight: 500;
-  font-size: clamp(4.875rem, 22vw, 24.8125rem);
+  font-size: clamp(3.25rem, 16.4vw, 24.8125rem);
   line-height: 0.83;
+  white-space: nowrap;
   letter-spacing: -0.02em;
   color: #000;
 }
