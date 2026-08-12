@@ -126,7 +126,7 @@ export default function HeroSection() {
 
             {/* Centre — stroked statement + primary CTA */}
             <div className="ref-hero-fade order-first mx-auto w-full text-center lg:order-none lg:max-w-[575px]">
-              <h3 className="ref-stroke-heading mx-auto mb-5 w-full max-w-[575px]">
+              <h3 className="ref-stroke-heading mx-auto mb-5 w-full max-w-[575px] !text-white [-webkit-text-stroke:1px_var(--ref-ink)]">
                 {hero.statement}
               </h3>
               <Link
@@ -187,7 +187,7 @@ export default function HeroSection() {
           </div>
 
           {/* Line shape + pulsing circle */}
-          <div className="pointer-events-none absolute bottom-[13%] left-1/2 z-0 hidden -translate-x-1/2 lg:block">
+          <div className="pointer-events-none absolute bottom-[6%] left-1/2 z-0 hidden -translate-x-1/2 lg:block">
             <img src={lineShape} alt="" width={1770} height={180} loading="lazy" />
             <div className="ref-card absolute -top-6 left-1/2 grid h-[50px] w-[50px] -translate-x-1/2 place-items-center rounded-full border border-[var(--ref-hairline)] !shadow-none">
               <div className="grid h-9 w-9 place-items-center rounded-full bg-white">
