@@ -633,11 +633,7 @@
   color: var(--ref-body);
   font-family: var(--ref-font-body);
 }
-.ref-scope h1,
-.ref-scope h2,
-.ref-scope h3,
-.ref-scope h4,
-.ref-scope h5 {
+.ref-scope :where(h1, h2, h3, h4, h5) {
   font-family: var(--ref-font-heading);
   color: var(--ref-ink);
   font-weight: 500;
