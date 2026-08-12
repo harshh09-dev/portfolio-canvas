@@ -628,15 +628,21 @@
   --ref-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.ref-scope {
-  background: var(--ref-bg);
-  color: var(--ref-body);
-  font-family: var(--ref-font-body);
-}
-.ref-scope :where(h1, h2, h3, h4, h5) {
-  font-family: var(--ref-font-heading);
-  color: var(--ref-ink);
-  font-weight: 500;
+@layer base {
+  .ref-scope {
+    background: var(--ref-bg);
+    color: var(--ref-body);
+    font-family: var(--ref-font-body);
+  }
+  .ref-scope :where(h1, h2, h3, h4, h5) {
+    font-family: var(--ref-font-heading);
+    color: var(--ref-ink);
+    font-weight: 500;
+  }
+  .ref-scope :where(h1, h2, h3, h4, h5, p, span, li) {
+    overflow-wrap: normal;
+    word-wrap: normal;
+  }
 }
 
 @utility ref-container {
@@ -663,6 +669,8 @@
   font-size: clamp(3.25rem, 16.4vw, 24.8125rem);
   line-height: 0.83;
   white-space: nowrap;
+  overflow-wrap: normal;
+  word-wrap: normal;
   letter-spacing: -0.02em;
   color: #000;
 }
