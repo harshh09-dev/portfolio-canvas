@@ -1,23 +1,25 @@
-// Hero content — merged from the reference banner composition.
+// Hero content — mirrors the reference banner-three composition.
 // Components read from here; never hardcode hero copy in JSX.
 
 export const hero = {
   word: "developer",
+  introLead: "Hi! I'm Anjali",
   intro:
-    "Hi! I'm Anjali — a software developer who enjoys turning ideas into products people can actually use.",
+    "a software developer who enjoys turning ideas into products people can actually use.",
   capabilities: [
     "Full Stack Development",
     "Frontend Engineering",
     "Backend Development",
     "Database Design",
-    "UI / UX Design",
+    "UI/UX Design",
   ],
   statement: "Clean code, solid architecture, products that ship.",
-  primaryCta: { label: "View projects", href: "/projects" },
-  secondaryCta: { label: "Let's connect", href: "/contact" },
+  primaryCta: { label: "view projects", href: "/projects" },
   counters: [
-    { value: 2, suffix: "+", label: "Internships" },
-    { value: 10, suffix: "+", label: "Projects shipped" },
-    { value: 2, suffix: "+", label: "Years building" },
+    { value: 2, suffix: "+", label: "Internships", invert: false },
+    { value: 5, suffix: "+", label: "Projects Shipped", invert: true },
   ],
+  stack: ["React", "Node.js", "MongoDB", "TypeScript"],
+  stackTitle: "End-to-End",
+  stackLabel: "Development",
 };

@@ -1,26 +1,21 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, Plus } from "lucide-react";
 import { ensureGsap, prefersReducedMotion } from "@/lib/motion";
-import Magnetic from "@/components/motion/Magnetic";
-import SplitReveal from "@/components/motion/SplitReveal";
+import { Link } from "@tanstack/react-router";
 import { hero } from "@/data/hero";
-import { site } from "@/data/site";
+import manImg from "@/assets/ref/banner-three-man.png";
+import lineShape from "@/assets/ref/banner-three-shape.png";
 
-/** Count-up numeral. Static when reduced motion is requested. */
-function Counter({ to, suffix }: { to: number; suffix?: string }) {
+/** purecounter equivalent — counts up once the hero enters. */
+function Counter({ to }: { to: number }) {
   const [n, setN] = useState(0);
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLSpanElement>(null);
-
   useEffect(() => {
-    if (reduce) {
+    if (prefersReducedMotion()) {
       setN(to);
       return;
     }
     let raf = 0;
     const start = performance.now();
-    const dur = 1100;
+    const dur = 2000;
     const tick = (t: number) => {
       const p = Math.min(1, (t - start) / dur);
       setN(Math.round(to * (1 - Math.pow(1 - p, 3))));
@@ -28,155 +23,180 @@ function Counter({ to, suffix }: { to: number; suffix?: string }) {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [to, reduce]);
-
-  return (
-    <span ref={ref} className="tabular-nums">
-      {n}
-      {suffix}
-    </span>
-  );
+  }, [to]);
+  return <>{n}</>;
 }
 
 /**
- * Hero — three-part editorial banner adapted from the reference layout:
- * an oversized wordmark, an intro + capability list on the left, the
- * positioning statement and CTAs in the centre, counters on the right.
- * Monochrome only; laid out per breakpoint rather than merely scaled.
+ * Hero — reproduction of the reference `banner-three-area`:
+ * illustration centred behind an oversized lowercase wordmark, then a
+ * three-part end-aligned row (neumorphic intro card / stroked statement +
+ * CTA / stacked counter cards), with the horizontal line shape and its
+ * pulsing circle beneath.
  */
 export default function HeroSection() {
-  const reduce = useReducedMotion();
   const root = useRef<HTMLDivElement>(null);
-  const wordRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
-    const el = wordRef.current;
+    const el = root.current;
     if (!el) return;
     const { gsap } = ensureGsap();
-    gsap.fromTo(
-      el,
-      { yPercent: 22, opacity: 0, filter: "blur(16px)" },
-      {
-        yPercent: 0,
-        opacity: 1,
-        filter: "blur(0px)",
-        duration: 1.4,
+    const ctx = gsap.context(() => {
+      gsap.from(".ref-hero-title", {
+        yPercent: 18,
+        opacity: 0,
+        duration: 1.2,
         ease: "expo.out",
-        delay: 0.15,
-      },
-    );
+        delay: 0.1,
+      });
+      gsap.from(".ref-hero-man", {
+        y: 60,
+        opacity: 0,
+        duration: 1.2,
+        ease: "expo.out",
+        delay: 0.25,
+      });
+      gsap.from(".ref-hero-fade", {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        ease: "ease" in gsap ? "power3.out" : "power3.out",
+        stagger: 0.1,
+        delay: 0.4,
+      });
+    }, el);
+    return () => ctx.revert();
   }, []);
 
   return (
     <section
+      id="home"
       ref={root}
-      className="relative w-full overflow-hidden bg-bg noise-overlay"
-      style={{
-        paddingTop: "max(7rem, 14vh)",
-        paddingBottom: "clamp(3rem, 7vh, 5rem)",
-      }}
+      className="ref-scope relative w-full overflow-hidden"
+      style={{ paddingBlock: "clamp(7rem, 12vw, 12.5rem) clamp(4rem, 6vw, 6.25rem)" }}
     >
-      <div className="relative z-10 container-wide">
-        {/* Oversized wordmark */}
-        <div className="text-center lg:text-left">
-          <motion.p
-            initial={reduce ? false : { opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.05 }}
-            className="text-eyebrow mb-4"
-          >
-            {site.role} · {site.location}
-          </motion.p>
-          <h1
-            ref={wordRef}
-            className="select-none font-semibold leading-[0.82] tracking-[-0.04em] text-fg"
-            style={{
-              fontSize: "clamp(3.5rem, 15vw, 15rem)",
-              willChange: "transform, opacity, filter",
-            }}
-          >
-            {hero.word}
-          </h1>
-        </div>
-
-        {/* Three-part banner row */}
-        <div className="mt-10 grid gap-8 border-t border-border/60 pt-8 md:mt-12 md:grid-cols-2 md:gap-10 lg:mt-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)_minmax(0,0.7fr)] lg:items-end lg:gap-12">
-          {/* Left — intro + capabilities */}
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.35 }}
-          >
-            <p className="text-base leading-relaxed text-fg md:text-lg">{hero.intro}</p>
-            <ul className="mt-6 space-y-2.5">
-              {hero.capabilities.map((c) => (
-                <li key={c} className="flex items-center gap-2.5 text-sm text-fg-muted md:text-base">
-                  <Plus size={13} className="shrink-0 text-fg-subtle" aria-hidden />
-                  {c}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          {/* Centre — statement + CTAs */}
-          <div className="lg:px-2 lg:text-center">
-            <SplitReveal
-              as="h2"
-              className="text-serif-italic text-fg [font-size:clamp(1.4rem,2.6vw,2.25rem)]"
-              delay={0.5}
-              duration={1}
-              stagger={0.04}
-              split="words"
-            >
-              {hero.statement}
-            </SplitReveal>
-
-            <motion.div
-              initial={reduce ? false : { opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.85 }}
-              className="mt-7 flex flex-col gap-3 sm:flex-row lg:justify-center"
-            >
-              <Magnetic>
-                <a
-                  href={hero.primaryCta.href}
-                  className="group inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-fg px-6 py-3 text-sm font-medium text-bg transition-transform duration-300 hover:scale-[1.03]"
-                >
-                  {hero.primaryCta.label}
-                  <ArrowUpRight
-                    size={16}
-                    className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  />
-                </a>
-              </Magnetic>
-              <Magnetic strength={0.2}>
-                <a
-                  href={hero.secondaryCta.href}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-border-strong px-6 py-3 text-sm font-medium text-fg transition-colors duration-300 hover:bg-surface"
-                >
-                  {hero.secondaryCta.label}
-                </a>
-              </Magnetic>
-            </motion.div>
+      <div className="ref-container">
+        <div className="relative z-10">
+          {/* Illustration sits behind the wordmark, bottom-anchored */}
+          <div className="ref-hero-man pointer-events-none absolute bottom-[27%] left-1/2 z-0 -translate-x-1/2 max-md:bottom-[38%]">
+            <img
+              src={manImg}
+              alt=""
+              width={667}
+              height={970}
+              loading="eager"
+              className="h-auto w-[min(42vw,667px)] max-md:w-[58vw]"
+            />
           </div>
 
-          {/* Right — counters */}
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.55 }}
-            className="grid grid-cols-3 gap-4 md:col-span-2 lg:col-span-1 lg:grid-cols-1 lg:gap-5"
-          >
-            {hero.counters.map((c) => (
-              <div key={c.label} className="border-t border-border/60 pt-3 lg:border-t-0 lg:border-l lg:pl-4 lg:pt-0">
-                <p className="text-2xl font-semibold leading-none text-fg md:text-4xl">
-                  <Counter to={c.value} suffix={c.suffix} />
-                </p>
-                <p className="mt-1.5 text-xs text-fg-muted md:text-sm">{c.label}</p>
+          <h1 className="ref-hero-title ref-banner-title relative z-[1] mb-4 select-none text-center lg:text-left">
+            {hero.word}
+          </h1>
+
+          {/* banner-three-wrap — three parts, bottom aligned */}
+          <div className="relative z-[1] flex flex-wrap items-end justify-between gap-8 lg:flex-nowrap">
+            {/* Left — intro + capability list */}
+            <div
+              className="ref-hero-fade ref-card hidden w-full max-w-[260px] rounded-[var(--ref-radius-lg)] px-5 py-[35px] sm:block lg:max-w-[350px] lg:px-[35px] xl:max-w-[410px] lg:mb-[160px]"
+            >
+              <h2 className="mb-6 text-[clamp(1.25rem,1.5vw,1.6rem)] leading-[1.4]">
+                {hero.introLead} <br />
+                {hero.intro}
+              </h2>
+              <ul className="w-full max-w-[280px]">
+                {hero.capabilities.map((c) => (
+                  <li
+                    key={c}
+                    className="mb-4 flex items-center gap-2 text-[1.0625rem] font-medium text-[var(--ref-ink)]"
+                  >
+                    <span
+                      aria-hidden
+                      className="inline-block h-3 w-3 shrink-0 bg-[var(--ref-accent)]"
+                      style={{
+                        clipPath:
+                          "polygon(42% 0,58% 0,58% 42%,100% 42%,100% 58%,58% 58%,58% 100%,42% 100%,42% 58%,0 58%,0 42%,42% 42%)",
+                      }}
+                    />
+                    {c}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Centre — stroked statement + primary CTA */}
+            <div className="ref-hero-fade order-first mx-auto mt-[42vw] w-full text-center sm:mt-0 lg:order-none lg:max-w-[575px]">
+              <h3 className="ref-stroke-heading mx-auto mb-5 w-full max-w-[575px] !text-white [-webkit-text-stroke:1px_var(--ref-ink)]">
+                {hero.statement}
+              </h3>
+              <Link
+                to={hero.primaryCta.href}
+                className="ref-btn bg-[var(--ref-ink)] text-white"
+              >
+                {hero.primaryCta.label}
+                <span className="ref-btn-dot" aria-hidden />
+              </Link>
+            </div>
+
+            {/* Right — counter cards + stack avatars */}
+            <div className="ref-hero-fade ref-card hidden w-full max-w-[260px] rounded-[var(--ref-radius-lg)] p-5 sm:block lg:max-w-[350px] lg:p-[35px] xl:max-w-[410px] lg:mb-[160px]">
+              {hero.counters.map((c, i) => (
+                <div
+                  key={c.label}
+                  className={`ref-card relative mb-4 w-full max-w-[284px] rounded-[var(--ref-radius-md)] p-5 ${
+                    i === 1 ? "ml-auto !bg-[var(--ref-ink)]" : ""
+                  } ${i === 1 ? "-mt-5" : ""}`}
+                >
+                  <h4
+                    className={`mb-2 text-[clamp(2.25rem,3.4vw,4rem)] font-semibold leading-none ${
+                      c.invert ? "!text-white" : ""
+                    }`}
+                  >
+                    <Counter to={c.value} />
+                    {c.suffix}
+                  </h4>
+                  <p
+                    className={`text-[1.0625rem] font-medium ${
+                      c.invert ? "text-white" : "text-[var(--ref-ink)]"
+                    }`}
+                  >
+                    {c.label}
+                  </p>
+                </div>
+              ))}
+
+              <div className="mb-3 mt-6 flex items-center">
+                {hero.stack.map((t, i) => (
+                  <span
+                    key={t}
+                    title={t}
+                    className="relative z-[1] grid h-[52px] w-[52px] shrink-0 place-items-center rounded-full border-2 border-white bg-white text-[0.6875rem] font-bold uppercase text-[var(--ref-ink)] shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-transform duration-300 hover:-translate-y-1"
+                    style={{ marginInlineStart: i === 0 ? 0 : "-16px" }}
+                  >
+                    {t.slice(0, 2)}
+                  </span>
+                ))}
               </div>
-            ))}
-          </motion.div>
+              <h4 className="mb-2 text-[clamp(1.5rem,2vw,2rem)] font-semibold">
+                {hero.stackTitle}
+              </h4>
+              <p className="text-[1.0625rem] font-medium text-[var(--ref-ink)]">
+                {hero.stackLabel}
+              </p>
+            </div>
+          </div>
+
+          {/* Line shape + pulsing circle */}
+          <div className="pointer-events-none absolute bottom-[6%] left-1/2 z-0 hidden -translate-x-1/2 lg:block">
+            <img src={lineShape} alt="" width={1770} height={180} loading="lazy" />
+            <div className="ref-card absolute -top-6 left-1/2 grid h-[50px] w-[50px] -translate-x-1/2 place-items-center rounded-full border border-[var(--ref-hairline)] !shadow-none">
+              <div className="grid h-9 w-9 place-items-center rounded-full bg-white">
+                <span className="relative block h-3 w-3 rounded-full bg-[var(--ref-accent)]">
+                  <span className="absolute inset-0 animate-ping rounded-full bg-[var(--ref-accent)]/40" />
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

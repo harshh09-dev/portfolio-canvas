@@ -602,3 +602,253 @@
 @utility photo-mono {
   filter: grayscale(1) contrast(1.02);
 }
+
+/* ============================================================
+   REFERENCE HOME TOKENS + PRIMITIVES
+   Faithful reproduction of the A-Verse reference home page
+   (banner-three / about-three / service-three / portfolio-three /
+    feature-three / brand-three). Scoped to .ref-scope so the rest
+   of the site keeps its own theme.
+   ============================================================ */
+:root {
+  --ref-bg: #f5f5f5;
+  --ref-ink: #02090f;
+  --ref-white: #ffffff;
+  --ref-accent: hsl(19 100% 50%);       /* main-two-600 */
+  --ref-accent-2: hsl(72 99% 50%);      /* main-600 */
+  --ref-body: rgba(2, 9, 15, 0.7);
+  --ref-hairline: rgba(2, 9, 15, 0.1);
+  --ref-hairline-inv: rgba(255, 255, 255, 0.1);
+  --ref-neu: 0 4px 4px 0 rgba(0, 0, 0, 0.25), -4px -4px 0 0 rgba(255, 255, 255, 0.25);
+  --ref-radius-lg: 16px;
+  --ref-radius-md: 10px;
+  --ref-container: 1800px;
+  --ref-font-heading: "Phudu", var(--font-sans);
+  --ref-font-body: "Instrument Sans", var(--font-sans);
+  --ref-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  .ref-scope {
+    background: var(--ref-bg);
+    color: var(--ref-body);
+    font-family: var(--ref-font-body);
+  }
+  .ref-scope :where(h1, h2, h3, h4, h5) {
+    font-family: var(--ref-font-heading);
+    color: var(--ref-ink);
+    font-weight: 500;
+  }
+  .ref-scope :where(h1, h2, h3, h4, h5, p, span, li) {
+    overflow-wrap: normal;
+    word-wrap: normal;
+  }
+}
+
+@utility ref-container {
+  width: 100%;
+  max-width: var(--ref-container);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 3rem);
+}
+
+/* Neumorphic surface used by every reference card */
+@utility ref-card {
+  background: var(--ref-bg);
+  box-shadow: var(--ref-neu);
+}
+
+@utility ref-ink-bg {
+  background: var(--ref-ink);
+}
+
+/* banner-three-title: 397px @1800 down to 78px on small phones */
+@utility ref-banner-title {
+  font-family: var(--ref-font-heading);
+  font-weight: 500;
+  font-size: clamp(3.25rem, 16.4vw, 24.8125rem);
+  line-height: 0.83;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-wrap: normal;
+  letter-spacing: -0.02em;
+  color: #000;
+}
+
+/* portfolio "works" background word: 642px → 130px */
+@utility ref-shape-title {
+  font-family: var(--ref-font-heading);
+  font-size: clamp(8.125rem, 36vw, 40.125rem);
+  line-height: 0.8;
+  color: rgba(2, 9, 15, 0.05);
+}
+
+/* marquee-two-title: 165px, stroke variant */
+@utility ref-marquee-title {
+  font-family: var(--ref-font-heading);
+  font-size: clamp(3rem, 9vw, 10.3125rem);
+  line-height: 0.95;
+  color: #fff;
+  white-space: nowrap;
+}
+@utility ref-marquee-stroke {
+  color: transparent;
+  -webkit-text-stroke: 1px #fff;
+}
+
+/* banner-three-center-title: white fill + ink stroke */
+@utility ref-stroke-heading {
+  font-family: var(--ref-font-heading);
+  color: #fff;
+  -webkit-text-stroke: 1px var(--ref-ink);
+  font-size: clamp(1.5rem, 2.4vw, 3rem);
+  line-height: 1.15;
+}
+
+/* tw-hover-btn — expanding accent dot from bottom centre */
+@utility ref-btn {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: var(--ref-radius-lg);
+  padding: 1rem 2.5rem;
+  transition: transform 0.25s var(--ref-ease);
+}
+.ref-btn > .ref-btn-dot {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--ref-accent);
+  transition: width 0.6s ease-out, height 0.6s ease-out;
+  z-index: -1;
+}
+.ref-btn:hover {
+  transform: translateY(-2px);
+}
+.ref-btn:hover > .ref-btn-dot {
+  width: 520px;
+  height: 520px;
+}
+
+/* tw-btn-circle — circular CTA with expanding dot */
+@utility ref-circle-btn {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--ref-hairline);
+  text-align: center;
+  transition: color 0.4s;
+}
+.ref-circle-btn > .ref-circle-dot {
+  position: absolute;
+  left: 42px;
+  bottom: -15px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--ref-accent);
+  transform: translate(-50%, -50%);
+  transition: all 0.6s;
+  z-index: -1;
+}
+.ref-circle-btn:hover > .ref-circle-dot {
+  width: 640px;
+  height: 640px;
+}
+.ref-circle-btn:hover span {
+  color: #fff !important;
+}
+
+/* portfolio-list pill with leading dot */
+@utility ref-pill {
+  position: relative;
+  display: inline-block;
+  border: 1px solid var(--ref-hairline);
+  border-radius: 90px;
+  padding: 6px 20px 6px 40px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: all 0.4s;
+}
+.ref-pill::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: 50%;
+  left: 20px;
+  border-radius: 50%;
+  background: currentColor;
+  transform: translateY(-50%);
+  transition: 0.4s;
+}
+.ref-pill:hover {
+  background: var(--ref-accent);
+  border-color: var(--ref-accent);
+  color: #fff;
+}
+
+/* service-three-single */
+@utility ref-service-row {
+  border: 2px solid var(--ref-hairline-inv);
+  border-radius: 200px;
+  padding: 30px 30px 30px 60px;
+  max-width: 1500px;
+  width: 100%;
+  transition: 0.5s;
+}
+.ref-service-row:hover {
+  border-color: var(--ref-accent);
+}
+.ref-service-row:hover .ref-service-title {
+  color: var(--ref-accent);
+}
+.ref-service-row:hover .ref-service-number {
+  color: var(--ref-accent);
+}
+
+/* feature-three rows (experience) */
+@utility ref-exp-row {
+  border-top: 1px solid var(--ref-hairline-inv);
+  padding-block: 36px;
+  position: relative;
+}
+
+/* tech chip cards */
+@utility ref-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: var(--ref-bg);
+  box-shadow: var(--ref-neu);
+  height: 100%;
+  transition: transform 0.3s var(--ref-ease);
+}
+.ref-chip:hover {
+  transform: translateY(-4px);
+}
+
+@media (max-width: 767px) {
+  .ref-service-row {
+    border-radius: 100px;
+    padding: 24px;
+  }
+}
