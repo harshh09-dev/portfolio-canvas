@@ -1,8 +1,14 @@
 // Centralized content — components read from here, never hardcode.
 
+export const brand = {
+  shortName: "AK",
+  fullName: "Anjali Kamal",
+};
+
 export const site = {
   name: "Anjali Kamal",
-  initials: "Ak",
+  /** Wordmark shown in navbar, mobile menu, footer and loaders. */
+  initials: brand.shortName,
   role: "Full Stack Dev & AI Engineer",
   location: "Jaipur, India",
   email: "anjalikamal3105@gmail.com",
@@ -16,11 +22,11 @@ export const nav = {
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Projects", href: "/projects" },
-    { name: "Off The Clock", href: "/off-the-clock" },
     { name: "Guestbook", href: "/guestbook" },
     { name: "Contact", href: "/contact" },
   ],
   more: [
+    { name: "Off The Clock", desc: "Photography, writing, experiments", href: "/off-the-clock" },
     { name: "Uses", desc: "Gear, editor and stack", href: "/uses" },
   ] as { name: string; desc: string; href: string }[],
 };
