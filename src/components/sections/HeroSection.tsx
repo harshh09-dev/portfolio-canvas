@@ -125,7 +125,7 @@ export default function HeroSection() {
             </div>
 
             {/* Centre — stroked statement + primary CTA */}
-            <div className="ref-hero-fade order-first mx-auto mt-[80vw] w-full text-center sm:mt-0 lg:order-none lg:max-w-[575px]">
+            <div className="ref-hero-fade order-first mx-auto mt-[80vw] w-full text-center sm:mt-[30vw] lg:mt-0 lg:order-none lg:max-w-[575px]">
               <h3 className="ref-stroke-heading mx-auto mb-5 w-full max-w-[575px] !text-white [-webkit-text-stroke:1px_var(--ref-ink)]">
                 {hero.statement}
               </h3>
