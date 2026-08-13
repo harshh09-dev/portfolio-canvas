@@ -6,10 +6,8 @@ import ServicesList from "@/components/sections/ServicesList";
 import WorksSection from "@/components/sections/WorksSection";
 import ExperienceSection from "@/components/sections/ExperienceSection";
 import TechStackSection from "@/components/sections/TechStackSection";
-import CreativeSide from "@/components/sections/CreativeSide";
 import LyricsAndLogic from "@/components/sections/LyricsAndLogic";
 import ContactCTA from "@/components/sections/ContactCTA";
-import ViewMore from "@/components/ViewMore";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -55,15 +53,11 @@ function Home() {
       <TechStackSection />
 
       {/* Unique to this project — preserved and placed after the reference flow */}
-      <div className="section-bg-warm-rich">
-        <section id="off-the-clock" style={{ paddingTop: "clamp(3rem, 6vw, 5rem)" }}>
-          <CreativeSide />
-          <ViewMore href="/off-the-clock" label="Enter the studio" />
-        </section>
-      </div>
-
       <div className="section-bg-quiet">
-        <section id="lyrics-and-logic" style={{ paddingTop: 0 }}>
+        <section
+          id="lyrics-and-logic"
+          style={{ paddingTop: "clamp(3rem, 6vw, 5rem)" }}
+        >
           <LyricsAndLogic />
         </section>
       </div>

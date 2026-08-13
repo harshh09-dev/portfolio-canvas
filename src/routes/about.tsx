@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import AboutPreview from "@/components/sections/AboutPreview";
 import SkillsSection from "@/components/sections/SkillsSection";
 import ContactCTA from "@/components/sections/ContactCTA";
+import CreativeSide from "@/components/sections/CreativeSide";
+import ViewMore from "@/components/ViewMore";
 import Reveal from "@/components/motion/Reveal";
 import SplitReveal from "@/components/motion/SplitReveal";
 import { journey, philosophy, interests } from "@/data/journey";
@@ -121,6 +123,13 @@ function AboutPage() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* Off The Clock — moved here from the Home page */}
+      <div className="divider-hair container-editorial" />
+      <section id="off-the-clock" className="section-bg-warm-rich scroll-mt-28">
+        <CreativeSide />
+        <ViewMore href="/off-the-clock" label="Enter the studio" />
       </section>
 
       {/* Interests */}

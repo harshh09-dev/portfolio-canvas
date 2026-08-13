@@ -65,7 +65,7 @@ export default function Navbar() {
   return (
     <>
       {/* Mobile */}
-      <header className="md:hidden fixed top-4 left-0 right-0 z-50 px-4">
+      <header className="lg:hidden fixed top-4 left-0 right-0 z-50 px-4">
         <div className="mx-auto flex max-w-sm items-center justify-between rounded-full border border-border bg-background/70 px-4 py-2 backdrop-blur-xl">
           <a href="/" className="flex items-center gap-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card">
@@ -164,7 +164,7 @@ export default function Navbar() {
       </header>
 
       {/* Desktop */}
-      <header className="hidden md:flex fixed top-5 left-0 right-0 z-50 justify-center px-4">
+      <header className="hidden lg:flex fixed top-5 left-0 right-0 z-50 justify-center px-4">
         <motion.div
           layout
           transition={{ type: "spring", stiffness: 260, damping: 28 }}

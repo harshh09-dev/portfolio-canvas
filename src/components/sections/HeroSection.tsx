@@ -74,19 +74,19 @@ export default function HeroSection() {
       id="home"
       ref={root}
       className="ref-scope relative w-full overflow-hidden"
-      style={{ paddingBlock: "clamp(7rem, 12vw, 12.5rem) clamp(4rem, 6vw, 6.25rem)" }}
+      style={{ paddingBlock: "clamp(6rem, 9vw, 9.5rem) clamp(4rem, 6vw, 6.25rem)" }}
     >
       <div className="ref-container">
         <div className="relative z-10">
           {/* Illustration sits behind the wordmark, bottom-anchored */}
-          <div className="ref-hero-man pointer-events-none absolute bottom-[27%] left-1/2 z-0 -translate-x-1/2 max-md:bottom-[38%]">
+          <div className="ref-hero-man pointer-events-none absolute top-[3.5rem] left-1/2 z-0 -translate-x-1/2 max-md:top-[6rem]">
             <img
               src={manImg}
               alt=""
               width={667}
               height={970}
               loading="eager"
-              className="h-auto w-[min(42vw,667px)] max-md:w-[58vw]"
+              className="h-[min(47vw,660px)] w-auto max-md:h-[72vw]"
             />
           </div>
 
@@ -98,7 +98,7 @@ export default function HeroSection() {
           <div className="relative z-[1] flex flex-wrap items-end justify-between gap-8 lg:flex-nowrap">
             {/* Left — intro + capability list */}
             <div
-              className="ref-hero-fade ref-card hidden w-full max-w-[260px] rounded-[var(--ref-radius-lg)] px-5 py-[35px] sm:block lg:max-w-[350px] lg:px-[35px] xl:max-w-[410px] lg:mb-[160px]"
+              className="ref-hero-fade ref-card block w-full max-w-full sm:max-w-[260px] rounded-[var(--ref-radius-lg)] px-5 py-[35px] lg:max-w-[350px] lg:px-[35px] xl:max-w-[410px] lg:mb-[160px]"
             >
               <h2 className="mb-6 text-[clamp(1.25rem,1.5vw,1.6rem)] leading-[1.4]">
                 {hero.introLead} <br />
@@ -125,7 +125,7 @@ export default function HeroSection() {
             </div>
 
             {/* Centre — stroked statement + primary CTA */}
-            <div className="ref-hero-fade order-first mx-auto mt-[42vw] w-full text-center sm:mt-0 lg:order-none lg:max-w-[575px]">
+            <div className="ref-hero-fade order-first mx-auto mt-[80vw] w-full text-center sm:mt-[30vw] lg:mt-0 lg:order-none lg:max-w-[575px]">
               <h3 className="ref-stroke-heading mx-auto mb-5 w-full max-w-[575px] !text-white [-webkit-text-stroke:1px_var(--ref-ink)]">
                 {hero.statement}
               </h3>
@@ -139,7 +139,7 @@ export default function HeroSection() {
             </div>
 
             {/* Right — counter cards + stack avatars */}
-            <div className="ref-hero-fade ref-card hidden w-full max-w-[260px] rounded-[var(--ref-radius-lg)] p-5 sm:block lg:max-w-[350px] lg:p-[35px] xl:max-w-[410px] lg:mb-[160px]">
+            <div className="ref-hero-fade ref-card block w-full max-w-full sm:max-w-[260px] rounded-[var(--ref-radius-lg)] p-5 lg:max-w-[350px] lg:p-[35px] xl:max-w-[410px] lg:mb-[160px]">
               {hero.counters.map((c, i) => (
                 <div
                   key={c.label}
