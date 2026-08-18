@@ -610,22 +610,41 @@
     feature-three / brand-three). Scoped to .ref-scope so the rest
    of the site keeps its own theme.
    ============================================================ */
-:root {
-  --ref-bg: #f5f5f5;
-  --ref-ink: #02090f;
-  --ref-white: #ffffff;
-  --ref-accent: hsl(19 100% 50%);       /* main-two-600 */
-  --ref-accent-2: hsl(72 99% 50%);      /* main-600 */
-  --ref-body: rgba(2, 9, 15, 0.7);
-  --ref-hairline: rgba(2, 9, 15, 0.1);
-  --ref-hairline-inv: rgba(255, 255, 255, 0.1);
-  --ref-neu: 0 4px 4px 0 rgba(0, 0, 0, 0.25), -4px -4px 0 0 rgba(255, 255, 255, 0.25);
+/* Theme-aware reference tokens. DARK is the default theme, `.light`
+   overrides. Every reference primitive reads these variables — no
+   component may hardcode a color. */
+:root, .dark {
+  --ref-bg: oklch(0.125 0 0);
+  --ref-ink: oklch(0.98 0 0);
+  --ref-body: oklch(0.74 0 0);
+  --ref-hairline: oklch(1 0 0 / 0.14);
+  --ref-inv-bg: oklch(0.075 0 0);
+  --ref-inv-fg: oklch(0.98 0 0);
+  --ref-hairline-inv: oklch(1 0 0 / 0.12);
+  --ref-shape: oklch(1 0 0 / 0.05);
+  --ref-neu: 0 4px 12px 0 rgb(0 0 0 / 0.55), -1px -1px 0 0 oklch(1 0 0 / 0.06);
+  --ref-accent: var(--ref-ink);
+  --ref-accent-fg: var(--ref-inv-bg);
   --ref-radius-lg: 16px;
   --ref-radius-md: 10px;
   --ref-container: 1800px;
   --ref-font-heading: "Phudu", var(--font-sans);
   --ref-font-body: "Instrument Sans", var(--font-sans);
   --ref-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.light {
+  --ref-bg: #f5f5f5;
+  --ref-ink: #02090f;
+  --ref-body: rgba(2, 9, 15, 0.7);
+  --ref-hairline: rgba(2, 9, 15, 0.1);
+  --ref-inv-bg: #02090f;
+  --ref-inv-fg: #ffffff;
+  --ref-hairline-inv: rgba(255, 255, 255, 0.14);
+  --ref-shape: rgba(2, 9, 15, 0.05);
+  --ref-neu: 0 4px 4px 0 rgba(0, 0, 0, 0.25), -4px -4px 0 0 rgba(255, 255, 255, 0.25);
+  --ref-accent: var(--ref-ink);
+  --ref-accent-fg: #ffffff;
 }
 
 @layer base {
@@ -659,10 +678,14 @@
 }
 
 @utility ref-ink-bg {
-  background: var(--ref-ink);
+  background: var(--ref-inv-bg);
+  color: var(--ref-inv-fg);
+}
+.ref-ink-bg :where(h1, h2, h3, h4, h5) {
+  color: var(--ref-inv-fg);
 }
 
-/* banner-three-title: 397px @1800 down to 78px on small phones */
+/* banner-three-title */
 @utility ref-banner-title {
   font-family: var(--ref-font-heading);
   font-weight: 500;
@@ -672,40 +695,40 @@
   overflow-wrap: normal;
   word-wrap: normal;
   letter-spacing: -0.02em;
-  color: #000;
+  color: var(--ref-ink);
 }
 
-/* portfolio "works" background word: 642px → 130px */
+/* portfolio "works" background word */
 @utility ref-shape-title {
   font-family: var(--ref-font-heading);
   font-size: clamp(8.125rem, 36vw, 40.125rem);
   line-height: 0.8;
-  color: rgba(2, 9, 15, 0.05);
+  color: var(--ref-shape);
 }
 
-/* marquee-two-title: 165px, stroke variant */
+/* marquee-two-title: stroke variant */
 @utility ref-marquee-title {
   font-family: var(--ref-font-heading);
   font-size: clamp(3rem, 9vw, 10.3125rem);
   line-height: 0.95;
-  color: #fff;
+  color: var(--ref-inv-fg);
   white-space: nowrap;
 }
 @utility ref-marquee-stroke {
   color: transparent;
-  -webkit-text-stroke: 1px #fff;
+  -webkit-text-stroke: 1px var(--ref-inv-fg);
 }
 
-/* banner-three-center-title: white fill + ink stroke */
+/* banner-three-center-title: filled + stroked */
 @utility ref-stroke-heading {
   font-family: var(--ref-font-heading);
-  color: #fff;
+  color: var(--ref-bg);
   -webkit-text-stroke: 1px var(--ref-ink);
   font-size: clamp(1.5rem, 2.4vw, 3rem);
   line-height: 1.15;
 }
 
-/* tw-hover-btn — expanding accent dot from bottom centre */
+/* tw-hover-btn — expanding dot from bottom centre */
 @utility ref-btn {
   position: relative;
   z-index: 1;
@@ -740,7 +763,7 @@
   height: 520px;
 }
 
-/* tw-btn-circle — circular CTA with expanding dot */
+/* tw-btn-circle */
 @utility ref-circle-btn {
   position: relative;
   z-index: 1;
@@ -771,20 +794,21 @@
   height: 640px;
 }
 .ref-circle-btn:hover span {
-  color: #fff !important;
+  color: var(--ref-accent-fg) !important;
 }
 
 /* portfolio-list pill with leading dot */
 @utility ref-pill {
   position: relative;
   display: inline-block;
-  border: 1px solid var(--ref-hairline);
+  border: 1px solid currentColor;
   border-radius: 90px;
   padding: 6px 20px 6px 40px;
   font-size: 0.8125rem;
   font-weight: 500;
   text-transform: uppercase;
   transition: all 0.4s;
+  opacity: 0.85;
 }
 .ref-pill::before {
   content: "";
@@ -799,9 +823,7 @@
   transition: 0.4s;
 }
 .ref-pill:hover {
-  background: var(--ref-accent);
-  border-color: var(--ref-accent);
-  color: #fff;
+  opacity: 1;
 }
 
 /* service-three-single */
@@ -814,13 +836,7 @@
   transition: 0.5s;
 }
 .ref-service-row:hover {
-  border-color: var(--ref-accent);
-}
-.ref-service-row:hover .ref-service-title {
-  color: var(--ref-accent);
-}
-.ref-service-row:hover .ref-service-number {
-  color: var(--ref-accent);
+  border-color: var(--ref-inv-fg);
 }
 
 /* feature-three rows (experience) */
@@ -840,10 +856,22 @@
   background: var(--ref-bg);
   box-shadow: var(--ref-neu);
   height: 100%;
-  transition: transform 0.3s var(--ref-ease);
+  transition: transform 0.3s var(--ref-ease), box-shadow 0.3s var(--ref-ease);
 }
 .ref-chip:hover {
   transform: translateY(-4px);
+}
+
+/* Cursor-follow hover preview (projects / services) */
+@utility ref-cursor-preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: var(--ref-radius-lg);
+  box-shadow: 0 24px 60px -20px rgb(0 0 0 / 0.6);
 }
 
 @media (max-width: 767px) {
