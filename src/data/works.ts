@@ -4,36 +4,44 @@ import w3 from "@/assets/ref/portfolio-three-thumb3.jpg";
 import w4 from "@/assets/ref/portfolio-three-thumb4.jpg";
 
 export type RefWork = {
+  /** Case-study slug — resolves to /projects/$slug. */
+  slug: string;
   title: string;
-  href: string;
   tags: string[];
+  /** Card thumbnail. */
   thumb: string;
+  /** Cursor-follow preview image — unique per project. */
+  hoverImage: string;
 };
 
 /** portfolio-three cards — staggered two-column masonry. */
 export const refWorks: RefWork[] = [
   {
+    slug: "neurospeak",
     title: "NeuroSpeak",
-    href: "/projects",
     tags: ["React & Supabase", "Realtime & RLS"],
     thumb: w1,
+    hoverImage: w1,
   },
   {
+    slug: "luxoree",
     title: "Luxorée",
-    href: "/projects",
     tags: ["TanStack Start", "Framer Motion & GSAP"],
     thumb: w2,
+    hoverImage: w2,
   },
   {
+    slug: "fabro",
     title: "FABRO",
-    href: "/projects",
     tags: ["Full Stack", "REST API"],
     thumb: w3,
+    hoverImage: w3,
   },
   {
+    slug: "snehra-solutions",
     title: "SNehra Solutions",
-    href: "/projects",
     tags: ["React & Prisma", "Payment Workflows"],
     thumb: w4,
+    hoverImage: w4,
   },
 ];
